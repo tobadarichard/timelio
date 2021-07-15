@@ -3,11 +3,15 @@ package tech.timelio.back.modele;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @Entity
 public class EmploiTemps {
@@ -15,9 +19,11 @@ public class EmploiTemps {
 	@GeneratedValue
 	protected Long id;
 	protected String nom;
+	@Column(unique = true)
 	protected String codeAcces;
 	protected boolean publique;
 	@ManyToOne
+	@JsonProperty(access = Access.WRITE_ONLY)
 	protected Utilisateur owner;
 	@OneToMany(mappedBy = "emploiTemps",cascade = CascadeType.REMOVE)
 	protected List<Evenement> evenements;
