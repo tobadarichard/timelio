@@ -17,8 +17,10 @@ public class EmploiTempsServiceImpl implements EmploiTempsService {
 	@Autowired
 	protected EmploiTempsDAO emploiTempsDAO;
 	
-	private EmploiTemps majEmploiTemps(EmploiTemps emploi,String newNom) {
+	private EmploiTemps majEmploiTemps(EmploiTemps emploi,String newNom,
+			boolean newPublique) {
 		emploi.setNom(newNom);
+		emploi.setPublique(newPublique);
 		return emploiTempsDAO.save(emploi);
 	}
 	
@@ -47,7 +49,7 @@ public class EmploiTempsServiceImpl implements EmploiTempsService {
 
 	@Override
 	public void supprimerEmploi(Long id) throws NotFoundException {
-		if (emploiTempsDAO.findById(id).isEmpty()) throw getEmploiNotFoundException();
+		if (!emploiTempsDAO.existsById(id)) throw getEmploiNotFoundException();
 		emploiTempsDAO.deleteById(id);
 	}
 
@@ -62,23 +64,30 @@ public class EmploiTempsServiceImpl implements EmploiTempsService {
 
 	@Override
 	public EmploiTemps recupererEmploi(Long id) throws NotFoundException {
-		return emploiTempsDAO.findById(id).orElseThrow(this::getEmploiNotFoundException);
-	}
-
-	@Override
-	public EmploiTemps recupererEmploi(String codeAcces) throws NotFoundException {
-		return emploiTempsDAO.findOneByCodeAcces(codeAcces)
+		return emploiTempsDAO.findWithEventsById(id)
 				.orElseThrow(this::getEmploiNotFoundException);
 	}
 
 	@Override
-	public EmploiTemps majEmploi(Long id, String newNom) throws NotFoundException {
-		return majEmploiTemps(recupererEmploi(id), newNom);
+	public EmploiTemps recupererEmploi(String codeAcces) throws NotFoundException {
+		return emploiTempsDAO.findOneWithEventsByCodeAcces(codeAcces)
+				.orElseThrow(this::getEmploiNotFoundException);
 	}
 
 	@Override
-	public EmploiTemps majEmploi(String codeAcces, String newNom) throws NotFoundException {
-		return majEmploiTemps(recupererEmploi(codeAcces), newNom);
+	public EmploiTemps majEmploi(Long id, String newNom,
+			boolean newPublique) throws NotFoundException {
+		EmploiTemps emploi = emploiTempsDAO.findById(id)
+				.orElseThrow(this::getEmploiNotFoundException);
+		return majEmploiTemps(emploi, newNom,newPublique);
+	}
+
+	@Override
+	public EmploiTemps majEmploi(String codeAcces, String newNom) 
+			throws NotFoundException {
+		EmploiTemps emploi = emploiTempsDAO.findOneByCodeAcces(codeAcces)
+				.orElseThrow(this::getEmploiNotFoundException);
+		return majEmploiTemps(emploi,newNom,true);
 	}
 
 	@Override

@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "timelio.secret",
+  "type": "java.lang.String",
+  "description": "Clé secrete pour la signature des tokens jwt. Elle doit être encodée en base64 et être utilisable par HMAC-SHA"
+}]}

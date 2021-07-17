@@ -96,10 +96,12 @@ class EmploiTempsServiceTest {
 	void testShouldUpdate() {
 		EmploiTemps oldEmploi = new EmploiTemps();
 		oldEmploi.setNom("ancien");
+		oldEmploi.setPublique(true);
 		entityManager.persist(oldEmploi);
 		entityManager.flush();
 		
-		assertDoesNotThrow(() -> emploiService.majEmploi(oldEmploi.getId(), "nouveau"));
+		assertDoesNotThrow(() -> emploiService.majEmploi(oldEmploi.getId(),
+				"nouveau",true));
 		EmploiTemps nouveauEmploi = entityManager.find(EmploiTemps.class,
 				oldEmploi.getId());
 		assertEquals("nouveau", nouveauEmploi.getNom());

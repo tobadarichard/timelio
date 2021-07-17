@@ -64,23 +64,25 @@ public interface EmploiTempsService {
 	public EmploiTemps recupererEmploi(String codeAcces) throws NotFoundException;
 	
 	/**
-	 * Met à jour un emploi du temps
+	 * Met à jour un emploi du temps privé
 	 * @param id L'identifiant de l'emploi du temps
 	 * @param newNom Le nouveau nom
+	 * @param newPublique La nouvelle visibilité
 	 * @return L'emploi du temps mis à jour
 	 * @throws NotFoundException SI l'emploi du temps n'est pas trouvé
 	 */
-	public EmploiTemps majEmploi(Long id, String newNom) 
+	public EmploiTemps majEmploi(Long id, String newNom,boolean newPublique) 
 			throws NotFoundException;
 	
 	/**
-	 * Met à jour un emploi du temps
+	 * Met à jour un emploi du temps publique
 	 * @param codeAcces Le code d'acces de l'emploi du temps
 	 * @param newNom Le nouveau nom
 	 * @return L'emploi du temps mis à jour
 	 * @throws NotFoundException SI l'emploi du temps n'est pas trouvé
 	 */
-	public EmploiTemps majEmploi(String codeAcces, String newNom) throws NotFoundException;
+	public EmploiTemps majEmploi(String codeAcces, String newNom) 
+			throws NotFoundException;
 	
 	/**
 	 * Recupere les emplois du temps d'un utilisateur
