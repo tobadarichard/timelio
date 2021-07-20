@@ -34,7 +34,7 @@ class EmploiTempsServiceTest {
 	@Test
 	void testShouldAddPublicEmploi() {
 		EmploiTemps emploi = emploiService.creerEmploi("Mon emploi test", true, null);
-		assertEquals(30, emploi.getCodeAcces().length());
+		assertEquals(50, emploi.getCodeAcces().length());
 		assertNotNull(emploi.getId());
 	}
 	

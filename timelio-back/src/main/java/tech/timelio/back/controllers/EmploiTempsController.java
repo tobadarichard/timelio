@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import tech.timelio.back.auth.AuthorizationService;
+import tech.timelio.back.auth.AuthService;
 import tech.timelio.back.auth.ForbiddenActionException;
 import tech.timelio.back.business.interfaces.EmploiTempsService;
 import tech.timelio.back.business.interfaces.exceptions.NotFoundException;
@@ -27,7 +27,7 @@ public class EmploiTempsController {
 	@Autowired
 	protected EmploiTempsService serviceEmploi;
 	@Autowired
-	protected AuthorizationService authService;
+	protected AuthService authService;
 	
 	@PostMapping("/emploi")
 	public EmploiTemps creerEmploiPublique(@Valid @RequestBody EmploiTempsForm form){
@@ -100,11 +100,11 @@ public class EmploiTempsController {
 		this.serviceEmploi = serviceEmploi;
 	}
 
-	public AuthorizationService getAuthService() {
+	public AuthService getAuthService() {
 		return authService;
 	}
 
-	public void setAuthService(AuthorizationService authService) {
+	public void setAuthService(AuthService authService) {
 		this.authService = authService;
 	}
 }

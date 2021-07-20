@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import tech.timelio.back.modele.Utilisateur;
 
 @Repository
-public interface AuthorizationRepository extends JpaRepository<Utilisateur, Long> {
+public interface AuthRepository extends JpaRepository<Utilisateur, Long> {
 	
 	@Query("SELECT count(*) FROM EmploiTemps et WHERE et.id = ?1 "
 			+ "AND et.owner = ?2")

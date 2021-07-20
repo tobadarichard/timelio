@@ -10,14 +10,23 @@ public class CodeGenerator {
 	private CodeGenerator() {
 		throw new IllegalStateException("Util class");
 	}
-
-	public static String genererCodeAcces() {
+	
+	public static String genererSequence(int size) {
+		if (size < 1) throw new IllegalArgumentException();
 		SecureRandom random = new SecureRandom();
 		StringBuilder builder = new StringBuilder();
-		for (int i = 0; i< 30; i++) {
+		for (int i = 0; i< size; i++) {
 			int index = random.nextInt(LENGTH_VALID_CHARACTERS);
 			builder.append(VALID_CHARACTERS.charAt(index));
 		}
 		return builder.toString();	
-	}	
+	}
+
+	public static String genererCodeAcces() {
+		return CodeGenerator.genererSequence(50);
+	}
+	
+	public static String genererValeurToken() {
+		return CodeGenerator.genererSequence(50);
+	}
 }

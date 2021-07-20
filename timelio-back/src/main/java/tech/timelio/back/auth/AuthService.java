@@ -3,13 +3,13 @@ package tech.timelio.back.auth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import tech.timelio.back.dao.AuthorizationRepository;
+import tech.timelio.back.dao.AuthRepository;
 import tech.timelio.back.modele.Utilisateur;
 
 @Service
-public class AuthorizationService {
+public class AuthService {
 	@Autowired
-	protected AuthorizationRepository authRepo;
+	protected AuthRepository authRepo;
 	
 	public void isEmploiOwner(Long emploiId,Utilisateur owner) 
 			throws ForbiddenActionException{
@@ -17,11 +17,11 @@ public class AuthorizationService {
 			throw new ForbiddenActionException();
 	}
 
-	public AuthorizationRepository getAuthRepo() {
+	public AuthRepository getAuthRepo() {
 		return authRepo;
 	}
 
-	public void setAuthRepo(AuthorizationRepository authRepo) {
+	public void setAuthRepo(AuthRepository authRepo) {
 		this.authRepo = authRepo;
 	}
 }

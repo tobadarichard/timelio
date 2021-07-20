@@ -7,6 +7,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 
@@ -24,6 +26,7 @@ public class TimelioBackApplication{
 		SpringApplication.run(TimelioBackApplication.class, args);
 	}
 	
+	//Le filtre qui vérifie l'authentification
 	@Bean
 	public FilterRegistrationBean<AuthenticationFilter> getAuthFilter(
 			UtilisateurDAO utilisateurDAO,JwtParser parser) {
@@ -46,5 +49,10 @@ public class TimelioBackApplication{
 	public JwtParser getJwtParser(@Value("${timelio.secret}") String stringKey) {
 		SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(stringKey));
 		return Jwts.parserBuilder().setSigningKey(key).build();
+	}
+	
+	@Bean
+	public PasswordEncoder encoder() {
+	    return new BCryptPasswordEncoder();
 	}
 }

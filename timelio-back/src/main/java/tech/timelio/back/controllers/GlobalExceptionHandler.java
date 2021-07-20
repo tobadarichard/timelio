@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import tech.timelio.back.auth.ForbiddenActionException;
+import tech.timelio.back.business.interfaces.exceptions.AlreadyExistsException;
 import tech.timelio.back.business.interfaces.exceptions.NotFoundException;
 
 @RestControllerAdvice
@@ -21,5 +22,11 @@ public class GlobalExceptionHandler {
 	@ResponseStatus(HttpStatus.FORBIDDEN)
 	public ResponseEntity<String> handleForbidden(ForbiddenActionException e){
 		return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+	}
+	
+	@ExceptionHandler(AlreadyExistsException.class)
+	@ResponseStatus(HttpStatus.CONFLICT)
+	public ResponseEntity<String> handleAlreadyExists(AlreadyExistsException e){
+		return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
 	}
 }
