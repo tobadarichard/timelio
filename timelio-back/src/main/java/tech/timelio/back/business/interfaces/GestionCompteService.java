@@ -23,12 +23,13 @@ public interface GestionCompteService {
 	 * Connecte l'utilisateur
 	 * @param email L'email de l'utilisateur
 	 * @param mdp Le mot de passe de l'utilisateur
-	 * @return L'utilisateur correspondant au couple email/mdp
+	 * @return Un wrapper qui contient le token de rafraichissement sous forme String et 
+	 * l'utilisateur
 	 * @throws NotFoundException Si l'utilisateur n'est pas trouvé
 	 * @throws UserNotVerifiedException Si le compte de l'utilisateur n'est pas 
 	 * vérifié
 	 */
-	public Utilisateur login(String email,String mdp) 
+	public UtilisateurEtToken login(String email,String mdp) 
 			throws NotFoundException, UserNotVerifiedException;
 	
 	/**
@@ -74,11 +75,12 @@ public interface GestionCompteService {
 	 * @param userId L'identifiant de l'utilisateur
 	 * @param oldMdp L'ancien mot de passe de l'utilisateur
 	 * @param newMdp Le nouveau mot de passe de l'utilisateur
-	 * @return L'utilisateur
+	 * @return Un wrapper qui contient le token de rafraichissement sous forme String et 
+	 * l'utilisateur
 	 * @throws NotFoundException Si l'utilisateur n'existe pas ou le mot de passe
 	 *  est incorrect
 	 */
-	public Utilisateur changerMdp(Long userId,String oldMdp, String newMdp) 
+	public UtilisateurEtToken changerMdp(Long userId,String oldMdp, String newMdp) 
 			throws NotFoundException;
 	
 	/**
@@ -105,4 +107,12 @@ public interface GestionCompteService {
 	 * @throws NotFoundException
 	 */
 	public void supprimerCompte(Long userId) throws NotFoundException;
+
+	/**
+	 * Crée un token d'acces à partir du token de rafraichissement
+	 * @param refreshToken Le token de rafraichissement
+	 * @return Le token d'acces sous forme de string
+	 * @throws NotFoundException Si le token de rafraichissement est invalide
+	 */
+	public String recupererTokenAcces(String refreshToken) throws NotFoundException;
 }

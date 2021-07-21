@@ -1,4 +1,4 @@
-package tech.timelio.back.forms;
+package tech.timelio.back.forms.account;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;

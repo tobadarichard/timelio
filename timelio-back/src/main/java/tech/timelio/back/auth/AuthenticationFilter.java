@@ -40,7 +40,7 @@ public class AuthenticationFilter implements Filter {
 		try {
 			Long userId = parser.parseClaimsJws(token).getBody()
 					.get("userId", Long.class);
-			httpRequest.setAttribute("user", new UtilisateurId(userId));
+			httpRequest.setAttribute("userId", new UtilisateurId(userId));
 			chain.doFilter(httpRequest, httpResponse);
 		} catch (JwtException e) {
 			httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED);

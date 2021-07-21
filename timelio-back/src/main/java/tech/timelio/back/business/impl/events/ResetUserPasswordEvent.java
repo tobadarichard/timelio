@@ -1,9 +1,9 @@
 package tech.timelio.back.business.impl.events;
 
-public class UserCreatedEvent {
+public class ResetUserPasswordEvent {
 	protected MailInfos infos;
 	
-	public UserCreatedEvent(MailInfos infos) {
+	public ResetUserPasswordEvent(MailInfos infos) {
 		this.infos = infos;
 	}
 

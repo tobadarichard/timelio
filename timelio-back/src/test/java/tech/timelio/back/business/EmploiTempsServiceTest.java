@@ -13,8 +13,6 @@ import javax.persistence.PersistenceException;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 
@@ -23,7 +21,6 @@ import tech.timelio.back.business.interfaces.exceptions.NotFoundException;
 import tech.timelio.back.modele.EmploiTemps;
 
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = Replace.NONE)
 @Import(EmploiTempsServiceImpl.class)
 class EmploiTempsServiceTest {
 	@PersistenceContext

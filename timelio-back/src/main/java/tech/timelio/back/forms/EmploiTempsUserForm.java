@@ -4,7 +4,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class EmploiTempsUserForm {
-	@NotEmpty(message = "Veuillez saisir un nom pour l'emploi du temps")
+	@NotEmpty
 	protected String nom;
 	@NotNull
 	protected Boolean publique;

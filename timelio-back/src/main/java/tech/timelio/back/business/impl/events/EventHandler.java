@@ -10,4 +10,9 @@ public class EventHandler {
 	public void handleUserCreation(UserCreatedEvent event) {
 		//TODO : envoi du mail de confirmation
 	}
+	
+	@EventListener
+	public void handleResetPassword(ResetUserPasswordEvent event) {
+		//TODO : envoi du mail pour nouveau mot de passe
+	}
 }

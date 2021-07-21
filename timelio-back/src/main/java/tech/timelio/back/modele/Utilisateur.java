@@ -9,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 @Entity
 public class Utilisateur {
 	@Id
@@ -16,13 +19,18 @@ public class Utilisateur {
 	protected Long id;
 	protected String pseudo;
 	protected String email;
+	@JsonProperty(access = Access.WRITE_ONLY)
 	protected String mdp;
+	@JsonProperty(access = Access.WRITE_ONLY)
 	protected boolean verifie;
 	@OneToOne(mappedBy = "owner", cascade = CascadeType.REMOVE)
+	@JsonProperty(access = Access.WRITE_ONLY)
 	protected RefreshTokenSalt refreshTokenSalt;
 	@OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
+	@JsonProperty(access = Access.WRITE_ONLY)
 	protected List<Token> tokens;
 	@OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
+	@JsonProperty(access = Access.WRITE_ONLY)
 	protected List<EmploiTemps> emploisTemps;
 	
 	public Long getId() {

@@ -29,4 +29,8 @@ public class CodeGenerator {
 	public static String genererValeurToken() {
 		return CodeGenerator.genererSequence(50);
 	}
+	
+	public static String genererSelToken() {
+		return CodeGenerator.genererSequence(30);
+	}
 }

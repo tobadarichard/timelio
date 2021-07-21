@@ -90,21 +90,4 @@ public class EmploiTempsController {
 			@RequestAttribute UtilisateurId userId,Pageable pagination) {
 		return serviceEmploi.listeEmploi(userId.getUtilisateur(), pagination);
 	}
-	
-	
-	public EmploiTempsService getServiceEmploi() {
-		return serviceEmploi;
-	}
-
-	public void setServiceEmploi(EmploiTempsService serviceEmploi) {
-		this.serviceEmploi = serviceEmploi;
-	}
-
-	public AuthService getAuthService() {
-		return authService;
-	}
-
-	public void setAuthService(AuthService authService) {
-		this.authService = authService;
-	}
 }
