@@ -107,12 +107,4 @@ public interface GestionCompteService {
 	 * @throws NotFoundException
 	 */
 	public void supprimerCompte(Long userId) throws NotFoundException;
-
-	/**
-	 * Crée un token d'acces à partir du token de rafraichissement
-	 * @param refreshToken Le token de rafraichissement
-	 * @return Le token d'acces sous forme de string
-	 * @throws NotFoundException Si le token de rafraichissement est invalide
-	 */
-	public String recupererTokenAcces(String refreshToken) throws NotFoundException;
 }

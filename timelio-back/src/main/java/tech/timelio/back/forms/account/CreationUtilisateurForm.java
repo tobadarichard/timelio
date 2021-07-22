@@ -2,9 +2,11 @@ package tech.timelio.back.forms.account;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 public class CreationUtilisateurForm {
 	@NotEmpty
+	@Pattern(regexp = "^\\w+$")
 	protected String pseudo;
 	@Email
 	protected String email;

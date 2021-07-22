@@ -1,5 +1,17 @@
-{"properties": [{
-  "name": "timelio.secret",
-  "type": "java.lang.String",
-  "description": "Clé secrete pour la signature des tokens jwt. Elle doit être encodée en base64 et être utilisable par HMAC-SHA"
-}]}
+{"properties": [
+  {
+    "name": "timelio.secret",
+    "type": "java.lang.String",
+    "description": "Clé secrete pour la signature des tokens jwt. Elle doit être encodée en base64 et être utilisable par HMAC-SHA"
+  },
+  {
+    "name": "timelio.url-front",
+    "type": "java.lang.String",
+    "description": "L'url du front-end"
+  },
+{
+    "name": "timelio.default-verify",
+    "type": "java.lang.Boolean",
+    "description": "Détermine si les comptes sont vérifiés par défaut à la création"
+  }
+]}

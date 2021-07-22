@@ -3,8 +3,10 @@ package tech.timelio.back.controllers;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import tech.timelio.back.business.interfaces.GestionCompteService;
+import tech.timelio.back.business.interfaces.TokenService;
 import tech.timelio.back.business.interfaces.UtilisateurEtToken;
 import tech.timelio.back.business.interfaces.exceptions.AlreadyExistsException;
 import tech.timelio.back.business.interfaces.exceptions.ExpiredTokenException;
@@ -30,15 +33,20 @@ import tech.timelio.back.forms.account.TokenForm;
 import tech.timelio.back.modele.Utilisateur;
 
 @RestController
+@CrossOrigin(origins = "${timelio.url-front}")
 public class GestionCompteController {
 	@Autowired
 	protected GestionCompteService gestionCompte;
+	@Autowired
+	protected TokenService tokenService;
+	@Value("${timelio.default-verify:false}")
+	protected boolean defaultVerify;
 	
 	@PostMapping("/account/register")
 	public ResponseEntity<String> creerUtilisateur(@Valid @RequestBody CreationUtilisateurForm form)
 			throws AlreadyExistsException{
 		gestionCompte.creerUtilisateur(form.getPseudo(), form.getEmail(), 
-				form.getMdp(), false);
+				form.getMdp(),defaultVerify);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
@@ -98,6 +106,6 @@ public class GestionCompteController {
 	
 	@PostMapping("/account/access-token")
 	public String getAccesToken(@Valid @RequestBody TokenForm form) throws NotFoundException {
-		return gestionCompte.recupererTokenAcces(form.getToken());
+		return tokenService.creerTokenAcces(form.getToken());
 	}
 }

@@ -151,11 +151,6 @@ public class GestionCompteServiceImpl implements GestionCompteService {
 	public void supprimerCompte(Long userId) throws NotFoundException {
 		userDAO.deleteByIdAndVerifie(userId, true);
 	}
-
-	@Override
-	public String recupererTokenAcces(String refreshToken) throws NotFoundException {
-		return tokenService.creerTokenAcces(refreshToken);
-	}
 	
 	public UtilisateurDAO getUserDAO() {
 		return userDAO;
@@ -179,5 +174,13 @@ public class GestionCompteServiceImpl implements GestionCompteService {
 
 	public void setEncoder(PasswordEncoder encoder) {
 		this.encoder = encoder;
+	}
+	
+	public TokenService getTokenService() {
+		return tokenService;
+	}
+
+	public void setTokenService(TokenService tokenService) {
+		this.tokenService = tokenService;
 	}
 }
