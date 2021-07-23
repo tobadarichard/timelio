@@ -65,7 +65,7 @@ public class TokenServiceImpl implements TokenService {
 	private String creerTokenAcces(Long userId) {
 		SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(stringKey));
 		Date start = new Date();
-		Date expire = new Date(start.getTime()+ (1000*60*3));
+		Date expire = new Date(start.getTime()+ (1000*60*3)); // start + 3 minutes
 		return Jwts.builder()
 				.claim(USER_ID_CLAIM, userId)
 				.setIssuedAt(start)

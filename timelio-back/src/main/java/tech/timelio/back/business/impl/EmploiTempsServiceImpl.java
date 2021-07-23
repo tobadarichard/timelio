@@ -20,6 +20,10 @@ public class EmploiTempsServiceImpl implements EmploiTempsService {
 	private EmploiTemps majEmploiTemps(EmploiTemps emploi,String newNom,
 			boolean newPublique) {
 		emploi.setNom(newNom);
+		if (emploi.isPublique() && !newPublique)
+			emploi.setCodeAcces(null);
+		else if (!emploi.isPublique() && newPublique)
+			emploi.setCodeAcces(CodeGenerator.genererCodeAcces());
 		emploi.setPublique(newPublique);
 		return emploiTempsDAO.save(emploi);
 	}

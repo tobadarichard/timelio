@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 @Entity
 public class Evenement {
 	@Id
@@ -20,6 +23,7 @@ public class Evenement {
 	protected boolean periodique;
 	protected Period periode;
 	@ManyToOne
+	@JsonProperty(access = Access.WRITE_ONLY)
 	protected EmploiTemps emploiTemps;
 	
 	public Long getId() {

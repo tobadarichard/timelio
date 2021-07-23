@@ -19,10 +19,11 @@ import tech.timelio.back.auth.AuthService;
 import tech.timelio.back.auth.ForbiddenActionException;
 import tech.timelio.back.business.interfaces.EmploiTempsService;
 import tech.timelio.back.business.interfaces.exceptions.NotFoundException;
-import tech.timelio.back.forms.EmploiTempsForm;
-import tech.timelio.back.forms.EmploiTempsUserForm;
+import tech.timelio.back.forms.emploi.EmploiTempsForm;
+import tech.timelio.back.forms.emploi.EmploiTempsUserForm;
 import tech.timelio.back.modele.EmploiTemps;
 
+//TODO Passage de /emploi vers /emplois
 @RestController
 @CrossOrigin(origins = "${timelio.url-front}")
 public class EmploiTempsController {

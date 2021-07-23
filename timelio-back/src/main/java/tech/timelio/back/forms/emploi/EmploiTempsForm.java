@@ -1,4 +1,4 @@
-package tech.timelio.back.forms;
+package tech.timelio.back.forms.emploi;
 
 import javax.validation.constraints.NotEmpty;
 

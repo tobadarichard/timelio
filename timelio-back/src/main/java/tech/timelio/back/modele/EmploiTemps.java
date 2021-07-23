@@ -26,6 +26,7 @@ public class EmploiTemps {
 	@JsonProperty(access = Access.WRITE_ONLY)
 	protected Utilisateur owner;
 	@OneToMany(mappedBy = "emploiTemps",cascade = CascadeType.REMOVE)
+	@JsonProperty(access = Access.WRITE_ONLY)
 	protected List<Evenement> evenements;
 	
 	public Long getId() {

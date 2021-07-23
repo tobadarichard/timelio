@@ -11,6 +11,7 @@ import tech.timelio.back.business.interfaces.exceptions.AlreadyExistsException;
 import tech.timelio.back.business.interfaces.exceptions.ExpiredTokenException;
 import tech.timelio.back.business.interfaces.exceptions.NotFoundException;
 import tech.timelio.back.business.interfaces.exceptions.UserNotVerifiedException;
+import tech.timelio.back.forms.exceptions.InvalidFormException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -42,5 +43,11 @@ public class GlobalExceptionHandler {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ResponseEntity<String> handleExpired(ExpiredTokenException e){
 		return new ResponseEntity<>("Token expiré",HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(InvalidFormException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ResponseEntity<String> handleInvalidForm(InvalidFormException e){
+		return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
 	}
 }
