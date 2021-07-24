@@ -38,7 +38,7 @@ public class EvenementsController {
 	@Autowired
 	protected EvenementService eventService;
 	
-	@PostMapping("/emploi/{codeAcces}/events")
+	@PostMapping("/emplois/{codeAcces}/events")
 	public Evenement creerEvent(@Valid @RequestBody EventForm form,
 			@PathVariable String codeAcces) throws InvalidFormException, NotFoundException{
 		EmploiTemps emploi = emploiService.recupererEmploi(codeAcces);
@@ -47,7 +47,7 @@ public class EvenementsController {
 		return eventService.creerEvenement(event);
 	}
 	
-	@PostMapping("/user/emploi/{id}/events")
+	@PostMapping("/user/emplois/{id}/events")
 	public Evenement creerEvent(@Valid @RequestBody EventForm form,
 			@RequestAttribute UtilisateurId userId,@PathVariable Long id) 
 					throws ForbiddenActionException, InvalidFormException, NotFoundException{
@@ -58,28 +58,30 @@ public class EvenementsController {
 		return eventService.creerEvenement(event);
 	}
 	
-	@GetMapping("/emploi/{codeAcces}/events")
+	@GetMapping("/emplois/{codeAcces}/events")
 	public Page<Evenement> listerEvents(@PathVariable String codeAcces,Pageable pagination) 
 			throws NotFoundException{
 		Long idEmploi = emploiService.recupererEmploi(codeAcces).getId();
 		return eventService.listerEvenements(idEmploi, pagination);
 	}
 	
-	@GetMapping("/user/emploi/{id}/events")
+	@GetMapping("/user/emplois/{id}/events")
 	public Page<Evenement> listerEvents(@RequestAttribute UtilisateurId userId, 
 			@PathVariable Long id,Pageable pagination) throws ForbiddenActionException{
 		authService.isEmploiOwner(id, userId.getUtilisateur());
 		return eventService.listerEvenements(id, pagination);
 	}
 	
-	@PostMapping("/emploi/{codeAcces}/events/search")
+	//TODO : améliorer la recherche pour prendre en compte la période
+	
+	@PostMapping("/emplois/{codeAcces}/events/search")
 	public List<Evenement> searchEvents(@PathVariable String codeAcces,
 			@Valid @RequestBody CriteresRerchercheEvents criteres) throws NotFoundException {
 		Long idEmploi = emploiService.recupererEmploi(codeAcces).getId();
 		return eventService.chercherEvenements(criteres, idEmploi);
 	}
 	
-	@PostMapping("/user/emploi/{idEmploi}/events/search")
+	@PostMapping("/user/emplois/{idEmploi}/events/search")
 	public List<Evenement> searchEvents(@PathVariable Long idEmploi, 
 			@RequestAttribute UtilisateurId userId, 
 			@Valid @RequestBody CriteresRerchercheEvents criteres) 
@@ -88,14 +90,14 @@ public class EvenementsController {
 		return eventService.chercherEvenements(criteres, idEmploi);
 	}
 	
-	@GetMapping("/emploi/{codeAcces}/events/{idEvent}")
+	@GetMapping("/emplois/{codeAcces}/events/{idEvent}")
 	public Evenement getEvent(@PathVariable String codeAcces,@PathVariable Long idEvent) 
 			throws NotFoundException {
 		Long idEmploi = emploiService.recupererEmploi(codeAcces).getId();
 		return eventService.recupererEvenement(idEmploi, idEvent);
 	}
 	
-	@GetMapping("/user/emploi/{idEmploi}/events/{idEvent}")
+	@GetMapping("/user/emplois/{idEmploi}/events/{idEvent}")
 	public Evenement getEvent(@PathVariable Long idEmploi,@PathVariable Long idEvent,
 			@RequestAttribute UtilisateurId userId) 
 					throws NotFoundException, ForbiddenActionException {
@@ -103,14 +105,14 @@ public class EvenementsController {
 		return eventService.recupererEvenement(idEmploi, idEvent);
 	}
 	
-	@DeleteMapping("/emploi/{codeAcces}/events/{idEvent}")
+	@DeleteMapping("/emplois/{codeAcces}/events/{idEvent}")
 	public void supprimerEvent(@PathVariable String codeAcces,@PathVariable Long idEvent) 
 			throws NotFoundException {
 		Long idEmploi = emploiService.recupererEmploi(codeAcces).getId();
 		eventService.supprimerEvenement(idEmploi, idEvent);
 	}
 	
-	@DeleteMapping("/user/emploi/{idEmploi}/events/{idEvent}")
+	@DeleteMapping("/user/emplois/{idEmploi}/events/{idEvent}")
 	public void supprimerEvent(@PathVariable Long idEmploi,@PathVariable Long idEvent,
 			@RequestAttribute UtilisateurId userId) 
 					throws NotFoundException, ForbiddenActionException {
@@ -118,7 +120,7 @@ public class EvenementsController {
 		eventService.supprimerEvenement(idEmploi, idEvent);
 	}
 	
-	@PutMapping("/emploi/{codeAcces}/events/{idEvent}")
+	@PutMapping("/emplois/{codeAcces}/events/{idEvent}")
 	public Evenement majEvent(@PathVariable String codeAcces,@PathVariable Long idEvent,
 			@Valid @RequestBody EventForm form) throws NotFoundException, InvalidFormException {
 		EmploiTemps emploi = emploiService.recupererEmploi(codeAcces);
@@ -128,7 +130,7 @@ public class EvenementsController {
 		return eventService.majEvenement(emploi.getId(), event);
 	}
 	
-	@PutMapping("/user/emploi/{idEmploi}/events/{idEvent}")
+	@PutMapping("/user/emplois/{idEmploi}/events/{idEvent}")
 	public Evenement majEvent(@PathVariable Long idEmploi,@PathVariable Long idEvent,
 			@Valid @RequestBody EventForm form,@RequestAttribute UtilisateurId userId) 
 					throws NotFoundException, ForbiddenActionException, InvalidFormException {

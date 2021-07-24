@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import tech.timelio.back.modele.Utilisateur;
 
+
 @Component
 public class EventHandler {
 	@Autowired
@@ -36,7 +37,7 @@ public class EventHandler {
 			
 			sender.send(mail);
 		} catch (MessagingException | UnsupportedEncodingException e) {
-			//TODO Gérer cette situation ?
+			//TODO ?
 		}
 	}
 

@@ -40,7 +40,6 @@ public class TimelioBackApplication{
 		FilterRegistrationBean<AuthenticationFilter> registrationBean = 
 				new FilterRegistrationBean<>();
 		registrationBean.setFilter(filter);
-		//TODO : mettre à jour les chemins
 		registrationBean.addUrlPatterns("/user/*");
 		return registrationBean;
 	}

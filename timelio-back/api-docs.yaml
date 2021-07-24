@@ -1,0 +1,1821 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  /user/emplois/{id}:
+    get:
+      tags:
+      - emplois-temps-controller
+      operationId: recupererEmploiUtilisateur
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/EmploiTemps'
+    put:
+      tags:
+      - emplois-temps-controller
+      operationId: majEmploiUtilisateur
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmploiTempsUserForm'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/EmploiTemps'
+    delete:
+      tags:
+      - emplois-temps-controller
+      operationId: supprimerEmploiUtilisateur
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+  /user/emplois/{idEmploi}/events/{idEvent}:
+    get:
+      tags:
+      - evenements-controller
+      operationId: getEvent
+      parameters:
+      - name: idEmploi
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: idEvent
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Evenement'
+    put:
+      tags:
+      - evenements-controller
+      operationId: majEvent
+      parameters:
+      - name: idEmploi
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: idEvent
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventForm'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Evenement'
+    delete:
+      tags:
+      - evenements-controller
+      operationId: supprimerEvent
+      parameters:
+      - name: idEmploi
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: idEvent
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+  /user/account:
+    get:
+      tags:
+      - gestion-compte-controller
+      operationId: getInfosUtilisateur
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Utilisateur'
+    put:
+      tags:
+      - gestion-compte-controller
+      operationId: majInfosUtilisateur
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PseudoForm'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Utilisateur'
+    delete:
+      tags:
+      - gestion-compte-controller
+      operationId: supprimerUtilisateur
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+  /user/account/password:
+    put:
+      tags:
+      - gestion-compte-controller
+      operationId: majMdpUtilisateur
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewAndOldMdpForm'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UtilisateurEtToken'
+  /emplois/{codeAcces}:
+    get:
+      tags:
+      - emplois-temps-controller
+      operationId: recupererEmploiPublique
+      parameters:
+      - name: codeAcces
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/EmploiTemps'
+    put:
+      tags:
+      - emplois-temps-controller
+      operationId: majEmploiPublique
+      parameters:
+      - name: codeAcces
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmploiTempsForm'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/EmploiTemps'
+    delete:
+      tags:
+      - emplois-temps-controller
+      operationId: supprimerEmploiPublique
+      parameters:
+      - name: codeAcces
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+  /emplois/{codeAcces}/events/{idEvent}:
+    get:
+      tags:
+      - evenements-controller
+      operationId: getEvent_1
+      parameters:
+      - name: codeAcces
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: idEvent
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Evenement'
+    put:
+      tags:
+      - evenements-controller
+      operationId: majEvent_1
+      parameters:
+      - name: codeAcces
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: idEvent
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventForm'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Evenement'
+    delete:
+      tags:
+      - evenements-controller
+      operationId: supprimerEvent_1
+      parameters:
+      - name: codeAcces
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: idEvent
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+  /user/emplois:
+    get:
+      tags:
+      - emplois-temps-controller
+      operationId: listerEmploiUtilisateur
+      parameters:
+      - name: pagination
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageEmploiTemps'
+    post:
+      tags:
+      - emplois-temps-controller
+      operationId: creerEmploiUtilisateur
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmploiTempsUserForm'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/EmploiTemps'
+  /user/emplois/{id}/events:
+    get:
+      tags:
+      - evenements-controller
+      operationId: listerEvents
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: pagination
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageEvenement'
+    post:
+      tags:
+      - evenements-controller
+      operationId: creerEvent
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventForm'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Evenement'
+  /user/emplois/{idEmploi}/events/search:
+    post:
+      tags:
+      - evenements-controller
+      operationId: searchEvents
+      parameters:
+      - name: idEmploi
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CriteresRerchercheEvents'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Evenement'
+  /emplois:
+    post:
+      tags:
+      - emplois-temps-controller
+      operationId: creerEmploiPublique
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmploiTempsForm'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/EmploiTemps'
+  /emplois/{codeAcces}/events:
+    get:
+      tags:
+      - evenements-controller
+      operationId: listerEvents_1
+      parameters:
+      - name: codeAcces
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: pagination
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageEvenement'
+    post:
+      tags:
+      - evenements-controller
+      operationId: creerEvent_1
+      parameters:
+      - name: codeAcces
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventForm'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Evenement'
+  /emplois/{codeAcces}/events/search:
+    post:
+      tags:
+      - evenements-controller
+      operationId: searchEvents_1
+      parameters:
+      - name: codeAcces
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CriteresRerchercheEvents'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Evenement'
+  /account/reset-password:
+    post:
+      tags:
+      - gestion-compte-controller
+      operationId: demandeResetMdp
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailForm'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+  /account/reset-password/{token}:
+    post:
+      tags:
+      - gestion-compte-controller
+      operationId: resetMdp
+      parameters:
+      - name: token
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewMdpForm'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+  /account/register:
+    post:
+      tags:
+      - gestion-compte-controller
+      operationId: creerUtilisateur
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreationUtilisateurForm'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /account/login:
+    post:
+      tags:
+      - gestion-compte-controller
+      operationId: loginUtilisateur
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginForm'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UtilisateurEtToken'
+  /account/access-token:
+    post:
+      tags:
+      - gestion-compte-controller
+      operationId: getAccesToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenForm'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /account/verify/{token}:
+    get:
+      tags:
+      - gestion-compte-controller
+      operationId: verifierCompte
+      parameters:
+      - name: token
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+  /account/verify/{token}/resend:
+    get:
+      tags:
+      - gestion-compte-controller
+      operationId: redemanderTokenVerificationCompte
+      parameters:
+      - name: token
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+components:
+  schemas:
+    EmploiTempsUserForm:
+      required:
+      - nom
+      - publique
+      type: object
+      properties:
+        nom:
+          type: string
+        publique:
+          type: boolean
+    EmploiTemps:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        nom:
+          type: string
+        codeAcces:
+          type: string
+        publique:
+          type: boolean
+        owner:
+          $ref: '#/components/schemas/Utilisateur'
+        evenements:
+          type: array
+          items:
+            $ref: '#/components/schemas/Evenement'
+    Evenement:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        dateDebut:
+          type: string
+          format: date-time
+        duree:
+          type: object
+          properties:
+            seconds:
+              type: integer
+              format: int64
+            nano:
+              type: integer
+              format: int32
+            negative:
+              type: boolean
+            units:
+              type: array
+              items:
+                type: object
+                properties:
+                  durationEstimated:
+                    type: boolean
+                  dateBased:
+                    type: boolean
+                  timeBased:
+                    type: boolean
+            zero:
+              type: boolean
+        description:
+          type: string
+        couleur:
+          type: string
+        periodique:
+          type: boolean
+        periode:
+          type: object
+          properties:
+            years:
+              type: integer
+              format: int32
+            months:
+              type: integer
+              format: int32
+            days:
+              type: integer
+              format: int32
+            negative:
+              type: boolean
+            units:
+              type: array
+              items:
+                type: object
+                properties:
+                  durationEstimated:
+                    type: boolean
+                  dateBased:
+                    type: boolean
+                  timeBased:
+                    type: boolean
+            chronology:
+              type: object
+              properties:
+                id:
+                  type: string
+                calendarType:
+                  type: string
+            zero:
+              type: boolean
+        emploiTemps:
+          $ref: '#/components/schemas/EmploiTemps'
+    RefreshTokenSalt:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        value:
+          type: string
+        owner:
+          $ref: '#/components/schemas/Utilisateur'
+    Token:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        createdAt:
+          type: string
+          format: date-time
+        expiredAt:
+          type: string
+          format: date-time
+        value:
+          type: string
+        type:
+          type: string
+          enum:
+          - VERIFY_ACCOUNT
+          - RESET_PASSWORD
+        owner:
+          $ref: '#/components/schemas/Utilisateur'
+    Utilisateur:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        pseudo:
+          type: string
+        email:
+          type: string
+        mdp:
+          type: string
+          writeOnly: true
+        verifie:
+          type: boolean
+          writeOnly: true
+        refreshTokenSalt:
+          $ref: '#/components/schemas/RefreshTokenSalt'
+        tokens:
+          type: array
+          writeOnly: true
+          items:
+            $ref: '#/components/schemas/Token'
+        emploisTemps:
+          type: array
+          writeOnly: true
+          items:
+            $ref: '#/components/schemas/EmploiTemps'
+    EventForm:
+      type: object
+      properties:
+        dateDebut:
+          type: string
+          format: date-time
+          writeOnly: true
+        duree:
+          type: object
+          properties:
+            seconds:
+              type: integer
+              format: int64
+            nano:
+              type: integer
+              format: int32
+            negative:
+              type: boolean
+            units:
+              type: array
+              items:
+                type: object
+                properties:
+                  durationEstimated:
+                    type: boolean
+                  dateBased:
+                    type: boolean
+                  timeBased:
+                    type: boolean
+            zero:
+              type: boolean
+          writeOnly: true
+        description:
+          type: string
+          writeOnly: true
+        couleur:
+          type: string
+          writeOnly: true
+        periodique:
+          type: boolean
+          writeOnly: true
+        periode:
+          type: object
+          properties:
+            years:
+              type: integer
+              format: int32
+            months:
+              type: integer
+              format: int32
+            days:
+              type: integer
+              format: int32
+            negative:
+              type: boolean
+            units:
+              type: array
+              items:
+                type: object
+                properties:
+                  durationEstimated:
+                    type: boolean
+                  dateBased:
+                    type: boolean
+                  timeBased:
+                    type: boolean
+            chronology:
+              type: object
+              properties:
+                id:
+                  type: string
+                calendarType:
+                  type: string
+            zero:
+              type: boolean
+          writeOnly: true
+        event:
+          $ref: '#/components/schemas/Evenement'
+    PseudoForm:
+      required:
+      - pseudo
+      type: object
+      properties:
+        pseudo:
+          pattern: ^\w+$
+          type: string
+    NewAndOldMdpForm:
+      required:
+      - newMdp
+      - oldMdp
+      type: object
+      properties:
+        oldMdp:
+          type: string
+        newMdp:
+          type: string
+    UtilisateurEtToken:
+      type: object
+      properties:
+        userInfos:
+          $ref: '#/components/schemas/Utilisateur'
+        refreshToken:
+          type: string
+    EmploiTempsForm:
+      required:
+      - nom
+      type: object
+      properties:
+        nom:
+          type: string
+    CriteresRerchercheEvents:
+      required:
+      - dateDebut
+      - dateFin
+      type: object
+      properties:
+        dateDebut:
+          type: string
+          format: date-time
+        dateFin:
+          type: string
+          format: date-time
+        description:
+          type: string
+    EmailForm:
+      type: object
+      properties:
+        email:
+          type: string
+    NewMdpForm:
+      required:
+      - mdp
+      type: object
+      properties:
+        mdp:
+          type: string
+    CreationUtilisateurForm:
+      required:
+      - mdp
+      - pseudo
+      type: object
+      properties:
+        pseudo:
+          pattern: ^\w+$
+          type: string
+        email:
+          type: string
+        mdp:
+          type: string
+    LoginForm:
+      required:
+      - mdp
+      type: object
+      properties:
+        email:
+          type: string
+        mdp:
+          type: string
+    TokenForm:
+      required:
+      - token
+      type: object
+      properties:
+        token:
+          type: string
+    Pageable:
+      type: object
+      properties:
+        page:
+          minimum: 0
+          type: integer
+          format: int32
+        size:
+          minimum: 1
+          type: integer
+          format: int32
+        sort:
+          type: array
+          items:
+            type: string
+    PageEmploiTemps:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+        sort:
+          $ref: '#/components/schemas/Sort'
+        first:
+          type: boolean
+        last:
+          type: boolean
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmploiTemps'
+        number:
+          type: integer
+          format: int32
+        numberOfElements:
+          type: integer
+          format: int32
+        empty:
+          type: boolean
+    Sort:
+      type: object
+      properties:
+        sorted:
+          type: boolean
+        unsorted:
+          type: boolean
+        empty:
+          type: boolean
+    PageEvenement:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+        sort:
+          $ref: '#/components/schemas/Sort'
+        first:
+          type: boolean
+        last:
+          type: boolean
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Evenement'
+        number:
+          type: integer
+          format: int32
+        numberOfElements:
+          type: integer
+          format: int32
+        empty:
+          type: boolean

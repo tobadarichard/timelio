@@ -23,21 +23,20 @@ import tech.timelio.back.forms.emploi.EmploiTempsForm;
 import tech.timelio.back.forms.emploi.EmploiTempsUserForm;
 import tech.timelio.back.modele.EmploiTemps;
 
-//TODO Passage de /emploi vers /emplois
 @RestController
 @CrossOrigin(origins = "${timelio.url-front}")
-public class EmploiTempsController {
+public class EmploisTempsController {
 	@Autowired
 	protected EmploiTempsService serviceEmploi;
 	@Autowired
 	protected AuthService authService;
 	
-	@PostMapping("/emploi")
+	@PostMapping("/emplois")
 	public EmploiTemps creerEmploiPublique(@Valid @RequestBody EmploiTempsForm form){
 		return serviceEmploi.creerEmploi(form.getNom());
 	}
 	
-	@PostMapping("/user/emploi")
+	@PostMapping("/user/emplois")
 	public EmploiTemps creerEmploiUtilisateur(
 			@Valid @RequestBody EmploiTempsUserForm form,
 			@RequestAttribute UtilisateurId userId){
@@ -45,13 +44,13 @@ public class EmploiTempsController {
 				form.getPublique(),userId.getUtilisateur());
 	}
 	
-	@DeleteMapping("/emploi/{codeAcces}")
+	@DeleteMapping("/emplois/{codeAcces}")
 	public void supprimerEmploiPublique(@PathVariable String codeAcces) 
 			throws NotFoundException{
 		serviceEmploi.supprimerEmploi(codeAcces);
 	}
 	
-	@DeleteMapping("/user/emploi/{id}")
+	@DeleteMapping("/user/emplois/{id}")
 	public void supprimerEmploiUtilisateur(@PathVariable Long id,
 			@RequestAttribute UtilisateurId userId) 
 					throws NotFoundException, ForbiddenActionException{
@@ -59,13 +58,13 @@ public class EmploiTempsController {
 		serviceEmploi.supprimerEmploi(id);
 	}
 
-	@GetMapping("/emploi/{codeAcces}")
+	@GetMapping("/emplois/{codeAcces}")
 	public EmploiTemps recupererEmploiPublique(@PathVariable String codeAcces) 
 			throws NotFoundException {
 		return serviceEmploi.recupererEmploi(codeAcces);
 	}
 	
-	@GetMapping("/user/emploi/{id}")
+	@GetMapping("/user/emplois/{id}")
 	public EmploiTemps recupererEmploiUtilisateur(@PathVariable Long id,
 			@RequestAttribute UtilisateurId userId) 
 					throws NotFoundException, ForbiddenActionException {
@@ -73,13 +72,13 @@ public class EmploiTempsController {
 		return serviceEmploi.recupererEmploi(id);
 	}
 	
-	@PutMapping("/emploi/{codeAcces}")
+	@PutMapping("/emplois/{codeAcces}")
 	public EmploiTemps majEmploiPublique(@PathVariable String codeAcces,
 			@Valid @RequestBody EmploiTempsForm form) throws NotFoundException {
 		return serviceEmploi.majEmploi(codeAcces,form.getNom());
 	}
 	
-	@PutMapping("/user/emploi/{id}")
+	@PutMapping("/user/emplois/{id}")
 	public EmploiTemps majEmploiUtilisateur(@PathVariable Long id,
 			@RequestAttribute UtilisateurId userId,
 			@Valid @RequestBody EmploiTempsUserForm form) 
@@ -88,8 +87,8 @@ public class EmploiTempsController {
 		return serviceEmploi.majEmploi(id,form.getNom(),form.getPublique());
 	}
 	
-	@GetMapping("/user/emploi")
-	public Page<EmploiTemps> majEmploiUtilisateur(
+	@GetMapping("/user/emplois")
+	public Page<EmploiTemps> listerEmploiUtilisateur(
 			@RequestAttribute UtilisateurId userId,Pageable pagination) {
 		return serviceEmploi.listeEmploi(userId.getUtilisateur(), pagination);
 	}
