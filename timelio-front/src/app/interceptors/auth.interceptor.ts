@@ -56,7 +56,6 @@ export class AuthInterceptor implements HttpInterceptor {
         obs.subscribe((event) => subscriber.next(event),(error) => {
           if (error instanceof HttpErrorResponse && error.status == 401){
             if (isNewToken){
-              this.authService.unexpectedLogout();
               subscriber.error(error);
             }
             else {
