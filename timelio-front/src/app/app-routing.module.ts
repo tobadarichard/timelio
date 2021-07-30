@@ -3,8 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
-import { AuthGuard } from './guards/auth/auth.guard';
+import { VerifyAccountComponent } from './components/verify-account/verify-account.component';
 import { VisitorGuard } from './guards/visitor/visitor.guard';
 
 const routes: Routes = [
@@ -13,6 +14,8 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent, canActivate: [VisitorGuard]},
   {path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [VisitorGuard]},
   {path: 'sign-up', component: SignUpComponent, canActivate: [VisitorGuard]},
+  {path: 'account/verify/:token',component: VerifyAccountComponent},
+  {path: 'account/reset-password/:token',component: ResetPasswordComponent}
 ];
 
 @NgModule({

@@ -1,0 +1,30 @@
+<section class="login-clean">
+    <div [ngSwitch]="verificationResult | async">
+        <div class="main-div">
+        <div *ngSwitchCase="'OK'" class="alert alert-success">
+            Votre compte a bien été vérifié ! Vous pouvez maintenant vous connecter
+        </div>
+        <div *ngSwitchCase="'BAD'" class="alert alert-danger">
+            Erreur : aucun compte trouvé ou token invalide
+        </div>
+        <div *ngSwitchCase="'EXPIRED'">
+            <div class="alert alert-danger">
+            Token expiré
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-primary d-block w-100" (click)="askNewToken()"
+                    [disabled]="askNewTokenResult">Renvoyer un mail de confirmation</button>
+                <div [ngSwitch]="askNewTokenResult | async">
+                    <div *ngSwitchCase="true" class="alert alert-success">
+                        Un nouveau mail vous a été envoyé
+                    </div>
+                    <div *ngSwitchCase="false" class="alert alert-danger">
+                        Erreur : veuilez reessayer plus tard
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+<app-footer></app-footer>

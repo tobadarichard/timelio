@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AuthService } from 'src/app/services/auth/auth.service';
+import { AccountService } from 'src/app/services/account/account.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -13,7 +13,7 @@ export class ForgotPasswordComponent implements OnInit {
 
   mailForm: FormGroup;
   envoye = false;
-  constructor(public authService: AuthService, private fb: FormBuilder, private snackbar: MatSnackBar) {
+  constructor(private fb: FormBuilder, private snackbar: MatSnackBar, private accountService: AccountService) {
     this.mailForm = fb.group(
       {
         'email': ['', [Validators.required, Validators.email]],
@@ -23,7 +23,7 @@ export class ForgotPasswordComponent implements OnInit {
 
   resetMdp(): void{
     this.envoye = false;
-    this.authService.askResetMdp(this.mailForm.value.email).subscribe(
+    this.accountService.askResetMdp(this.mailForm.value.email).subscribe(
       () => { 
         this.envoye = true;
         this.mailForm.reset();

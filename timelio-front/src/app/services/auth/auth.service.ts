@@ -41,16 +41,6 @@ export class AuthService {
       }));
   }
 
-  askResetMdp(email: string): Observable<any>{
-    return this.httpClient.post(environment.url+"/account/reset-password",{email: email});
-  }
-
-  signUp(email: string, password: string, pseudo: string): Observable<string>{
-    return this.httpClient.post(environment.url+'/account/register',{
-      email: email, mdp: password, pseudo: pseudo
-    },{responseType: 'text'});
-  }
-
   getUserInfos(): Observable<UserInfos>{
     if (this.userInfos != null){ return this.userInfos;}
     this.userInfos = new Observable<UserInfos>((subscriber) => {
@@ -96,6 +86,4 @@ export class AuthService {
   saveRefreshTolen(token: string): void{
     localStorage.setItem("RT",token);
   }
-
 }
-

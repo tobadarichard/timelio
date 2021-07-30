@@ -13,6 +13,8 @@ import { LoginComponent } from './components/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { VerifyAccountComponent } from './components/verify-account/verify-account.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
     FooterComponent,
     LoginComponent,
     SignUpComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    VerifyAccountComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

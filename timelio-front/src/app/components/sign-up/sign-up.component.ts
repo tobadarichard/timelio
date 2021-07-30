@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AuthService } from 'src/app/services/auth/auth.service';
+import { AccountService } from 'src/app/services/account/account.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -14,13 +14,13 @@ export class SignUpComponent implements OnInit {
   passwordsMatch = true;
   envoye = false;
   mailAvailable = true;
-  constructor(private authService: AuthService, private fb: FormBuilder,
+  constructor(private accountService: AccountService, private fb: FormBuilder,
     private snackbar: MatSnackBar) {
     this.signUpForm = fb.group({
       'email': ['', [Validators.required, Validators.email]],
       'password': ['', Validators.required],
       'confPassword': ['', Validators.required],
-      'pseudo': ['', Validators.required]
+      'pseudo': ['', [Validators.required,Validators.pattern('\\w+')]]
     });
   }
 
@@ -30,11 +30,10 @@ export class SignUpComponent implements OnInit {
     var values = this.signUpForm.value;
     this.passwordsMatch = values.confPassword == values.password;
     this.signUpForm.markAsPristine();
-
     if (!this.passwordsMatch) {
       return;
     }
-    this.authService.signUp(values.email, values.password, values.pseudo).subscribe(
+    this.accountService.signUp(values.email, values.password, values.pseudo).subscribe(
       () => { 
         this.envoye = true;
         this.signUpForm.reset();
@@ -48,7 +47,7 @@ export class SignUpComponent implements OnInit {
           this.mailAvailable = false;
         }
         else if (error.status == 400) {
-          this.snackbar.open('Formulaire incomplet');
+          this.snackbar.open('Formulaire incomplet ou invalide');
         }
         else {
           this.snackbar.open('Une erreur s\'est produite veuillez reessayer');
