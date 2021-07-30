@@ -1,0 +1,32 @@
+<app-header></app-header>
+<section class="login-clean">
+    <form [formGroup]="loginForm" #form="ngForm" (ngSubmit)="login()">
+        <div *ngIf="!form.submitted" [ngSwitch]="error">
+            <div *ngSwitchCase="'nologin'" class="alert alert-danger">
+                Vous devez être connecté pour accedér à cette page
+            </div>
+            <div *ngSwitchCase="'logout'" class="alert alert-danger">
+                Une erreur est survenue : veuillez vous reconnecter
+            </div>
+        </div>
+        <h2 class="text-center">Se connecter</h2>
+        <div class="illustration">
+            <i class="icon ion-unlocked"></i>
+        </div>
+        <div class="mb-3">
+            <input class="form-control" type="email" name="email" placeholder="Email" formControlName="email">
+        </div>
+        <div class="mb-3">
+            <input class="form-control" type="password" name="password" placeholder="Mot de passe" 
+            formControlName="password">
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-primary d-block w-100"  
+            type="submit" [disabled]="form.invalid">Connexion</button>
+            <div *ngIf="incorrectLogin && form.pristine" class="alert alert-danger mt-1">Utilisateur non trouvé</div>
+        </div>
+        <a class="forgot" routerLink="/forgot-password">Mot de passe oublié ?</a>
+        <a class="forgot" routerLink="/sign-up">Pas encore de compte ? Créez en un</a>
+    </form>
+</section>
+<app-footer></app-footer>

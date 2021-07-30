@@ -1,0 +1,42 @@
+<app-header></app-header>
+<section class="login-clean">
+    <form [formGroup]="signUpForm" #form="ngForm" (ngSubmit)="signUp()">
+        <div *ngIf="envoye" class="alert alert-success">
+            Votre compte a bien été crée. Pour finir votre inscription, un mail de vérification vous a été envoyé.<br />
+            Pensez à vérifier le dossier spam.
+        </div>
+        <h2 class="text-center">S'inscrire</h2>
+        <div class="illustration">
+            <i class="fas fa-user-plus"></i>
+        </div>
+        <div class="mb-3">
+            <input class="form-control" type="email" name="email" placeholder="Email" formControlName="email"
+            [ngClass]="!mailAvailable && form.pristine ? 'is-invalid' : ''">
+            <div *ngIf="!mailAvailable && form.pristine" class="invalid-feedback">
+                Cette adresse mail est déjà utilisée
+            </div>
+        </div>
+        <div class="mb-3">
+            <input class="form-control" type="text" name="pseudo" placeholder="Pseudo" formControlName="pseudo">
+        </div>
+        <div class="mb-3">
+            <input class="form-control" type="password" name="password" placeholder="Mot de passe" 
+            formControlName="password" [ngClass]="!passwordsMatch && form.pristine ? 'is-invalid' : ''">
+            <div *ngIf="!passwordsMatch && form.pristine" class="invalid-feedback">
+                Les mots de passe ne correspondent pas
+            </div>
+        </div>
+        <div class="mb-3">
+            <input class="form-control" type="password" name="confPassword" placeholder="Confirmer le mot de passe" 
+            formControlName="confPassword" [ngClass]="!passwordsMatch && form.pristine ? 'is-invalid' : ''">
+            <div *ngIf="!passwordsMatch && form.pristine" class="invalid-feedback">
+                Les mots de passe ne correspondent pas
+            </div>
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-primary d-block w-100" type="submit" [disabled]="form.invalid">S'inscrire</button>
+        </div>
+        <a class="forgot" routerLink="/login">Déjà un compte ? Connectez vous</a>
+    </form>
+</section>
+<app-footer></app-footer>

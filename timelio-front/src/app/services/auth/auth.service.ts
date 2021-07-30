@@ -21,9 +21,9 @@ export class AuthService {
   }
 
   unexpectedLogout() {
-    //TODO: snackbar + naviguer vers /login
     localStorage.clear();
-    console.log("Unexpected logout");
+    this.snackBar.open('Erreur : vous avez été déconnecté')
+    this.router.navigate(['/login'],{queryParams: {error: 'logout'}});
     this.userInfos = null;
   }
   logout(){
@@ -35,10 +35,20 @@ export class AuthService {
 
   login(email: string, password: string): Observable<LoginResponse>{
     return this.httpClient.post<LoginResponse>(environment.url+"/account/login",
-      {email: email,password: password}).pipe(tap((response) => {
+      {email: email,mdp: password}).pipe(tap((response) => {
         localStorage.setItem("RT",response.refreshToken);
         localStorage.setItem("UI",JSON.stringify(response.userInfos));
       }));
+  }
+
+  askResetMdp(email: string): Observable<any>{
+    return this.httpClient.post(environment.url+"/account/reset-password",{email: email});
+  }
+
+  signUp(email: string, password: string, pseudo: string): Observable<string>{
+    return this.httpClient.post(environment.url+'/account/register',{
+      email: email, mdp: password, pseudo: pseudo
+    },{responseType: 'text'});
   }
 
   getUserInfos(): Observable<UserInfos>{
@@ -67,7 +77,7 @@ export class AuthService {
     return this.userInfos;
   }
 
-  fetchUserInfos(): Observable<UserInfos>{
+  private fetchUserInfos(): Observable<UserInfos>{
     return this.httpClient.get<UserInfos>(environment.url+"/user/account")
       .pipe(tap((response) => {
         localStorage.setItem("UI",JSON.stringify(response));
