@@ -1,0 +1,67 @@
+<app-header></app-header>
+<section class="large-main-div">
+    <h2 class="text-center">Mon compte</h2>
+    <form [formGroup]="pseudoForm" #refPseudoForm="ngForm" (ngSubmit)="changePseudo()">
+        <div class="row mb-3">
+            <h3 class="text-center">Changer de pseudo</h3>
+            <div class="col">
+                <input class="form-control" type="text" name="pseudo" placeholder="pseudo" formControlName="pseudo">
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-primary col" type="submit"
+                    [disabled]="refPseudoForm.invalid">Changer le
+                    pseudo</button>
+            </div>
+        </div>
+    </form>
+    <form [formGroup]="passwordForm" #refPasswordForm="ngForm" (ngSubmit)="changePassword()">
+        <div class="row mb-3 g-3">
+            <h3 class="text-center">Changer de mot de passe</h3>
+            <div class="col-10">
+                <input class="form-control" type="password" name="password" placeholder="Mot de passe actuel"
+                    formControlName="password">
+            </div>
+            <div class="col-10">
+                <input class="form-control" type="password" name="newPassword" placeholder="Nouveau mot de passe"
+                    formControlName="newPassword">
+            </div>
+            <div class="col-10">
+                <input class="form-control" type="password" name="confNewPassword"
+                    placeholder="Confirmer le nouveau mot de passe" formControlName="confNewPassword">
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-primary col" type="submit"
+                    [disabled]="refPasswordForm.invalid">Changer le mot de passe</button>
+            </div>
+        </div>
+    </form>
+    <div class="row mb-3">
+        <h3 class="text-center text-danger">Supprimer mon compte</h3>
+        <div class="col">
+            <label for="delete" class="form-label">Attention cette action est irréversible et supprimera votre
+                compte ainsi que tous vos emplois du temps </label>
+            <button type="button" name="delete" class="btn btn-danger" type="button" data-bs-toggle="modal"
+                data-bs-target="#confirmationModal">Supprimer mon compte</button>
+        </div>
+        <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" 
+        aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-danger" id="confirmationModalLabel">Supprimer mon compte</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Êtes-vous sûr ?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteAccount()">
+                            Oui, supprimer mon compte</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<app-footer></app-footer>

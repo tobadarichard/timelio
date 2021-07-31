@@ -154,22 +154,6 @@
     text-decoration: none;
   }
   
-  .main-div {
-    max-width: 320px;
-    width: 90%;
-    margin: 0 auto;
-    background-color: #ffffff;
-    padding: 40px;
-    border-radius: 4px;
-    color: #505e6c;
-    box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
-  }
-  
-  .no-border {
-    border: 0;
-    box-shadow: none;
-  }
-  
   header.masthead {
     position:relative;
     background-color:#343a40;
@@ -259,3 +243,30 @@
        
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.main-div {
+  max-width: 320px;
+  width: 90%;
+  margin: 0 auto;
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 4px;
+  color: #505e6c;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+}
+
+.large-main-div {
+  max-width: 640px;
+  width: 90%;
+  margin: 40px auto;
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 4px;
+  color: #505e6c;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+}
+
+.no-border {
+  border: 0;
+  box-shadow: none;
+}

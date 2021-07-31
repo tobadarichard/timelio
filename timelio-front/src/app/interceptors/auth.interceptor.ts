@@ -54,14 +54,12 @@ export class AuthInterceptor implements HttpInterceptor {
     : Observable<HttpEvent<unknown>> {
       return new Observable<HttpEvent<unknown>>((subscriber) => {
         obs.subscribe((event) => subscriber.next(event),(error) => {
-          if (error instanceof HttpErrorResponse && error.status == 401){
-            if (isNewToken){
-              subscriber.error(error);
-            }
-            else {
-              this.getTokenAndSendRequest(request,next).subscribe((event) => subscriber.next(event),
+          if (error instanceof HttpErrorResponse && error.status == 401 && !isNewToken){
+            this.getTokenAndSendRequest(request,next).subscribe((event) => subscriber.next(event),
                 (error) => subscriber.error(error));
-            }
+          }
+          else{
+            subscriber.error(error);
           }
         });
       });
