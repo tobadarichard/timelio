@@ -1,11 +1,11 @@
 <nav class="navbar navbar-light navbar-expand-sm bg-light text-end d-xl-flex navigation-clean">
-    <div class="container"><a class="navbar-brand" href="#">Timelio</a><button data-bs-toggle="collapse"
+    <div class="container"><a class="navbar-brand" routerLink="/home">Timelio</a><button data-bs-toggle="collapse"
             class="navbar-toggler" data-bs-target="#navcol-1"><i class="fa fa-toggle-down"></i></button>
         <span *ngIf="authService.isLoggedIn()" class="text-nowrap navbar-text">Bonjour {{ (authService.getUserInfos() |
             async )?.pseudo}}</span>
         <div class="collapse navbar-collapse justify-content-end container" id="navcol-1">
             <a class="btn btn-primary mx-2" role="button" routerLink="/create-emploi">Créer un emploi du temps</a>
-            <a class="btn btn-primary mx-2" role="button" routerLink="/read-emploi">Voir un emploi du temps</a>
+            <a class="btn btn-primary mx-2" role="button" routerLink="/find-emploi">Voir un emploi du temps</a>
             <a *ngIf="authService.isLoggedIn()" class="btn btn-primary mx-2" role="button" 
             routerLink="/account/infos">Mon compte</a>
             <button *ngIf="authService.isLoggedIn()" class="btn btn-primary" (click)="authService.logout()">

@@ -10,12 +10,13 @@ import { FooterComponent } from './components/footer/footer.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS} from '@angular/material/snack-bar';
 import { LoginComponent } from './components/login/login.component'; 
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { VerifyAccountComponent } from './components/verify-account/verify-account.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { ManageAccountComponent } from './components/manage-account/manage-account.component';
+import { CreateEmploiComponent } from './components/create-emploi/create-emploi.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ManageAccountComponent } from './components/manage-account/manage-accou
     ForgotPasswordComponent,
     VerifyAccountComponent,
     ResetPasswordComponent,
-    ManageAccountComponent
+    ManageAccountComponent,
+    CreateEmploiComponent
   ],
   imports: [
     BrowserModule,

@@ -42,7 +42,6 @@ export class AuthService {
   }
 
   getUserInfos(): Observable<UserInfos> {
-    //TODO: actualiser de temps en temps
     if (this.userInfos != null) { return this.userInfos; }
     this.userInfos = new Observable<UserInfos>((subscriber) => {
       if (!this.isLoggedIn()) {
@@ -66,6 +65,11 @@ export class AuthService {
       }
     });
     return this.userInfos;
+  }
+
+  resetUserInfos(): void{
+    this.userInfos = null;
+    localStorage.removeItem('UI');
   }
 
   private fetchUserInfos(): Observable<UserInfos> {

@@ -31,6 +31,7 @@ export class AuthInterceptor implements HttpInterceptor {
         {token: this.authService.getRefreshToken()},
         {responseType: "text"})
         .subscribe((token) => {
+          this.authService.resetUserInfos();
           this.authService.saveAccesToken(token);
           this.sendRequest(request,next,token,true).subscribe(
             (event) => subscriber.next(event),
