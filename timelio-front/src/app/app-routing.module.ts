@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CreateEmploiComponent } from './components/create-emploi/create-emploi.component';
+import { EmploiComponent } from './components/emploi/emploi.component';
+import { FindEmploiComponent } from './components/find-emploi/find-emploi.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
@@ -20,7 +22,10 @@ const routes: Routes = [
   {path: 'account/verify/:token',component: VerifyAccountComponent},
   {path: 'account/reset-password/:token',component: ResetPasswordComponent},
   {path: 'account/infos', component: ManageAccountComponent, canActivate: [AuthGuard]},
-  {path: 'create-emploi', component: CreateEmploiComponent}
+  {path: 'emplois/create', component: CreateEmploiComponent},
+  {path: 'emplois', component: FindEmploiComponent, pathMatch: 'full'},
+  {path: 'emplois/public/:code', component: EmploiComponent},
+  {path: 'emplois/private/:id', component: EmploiComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

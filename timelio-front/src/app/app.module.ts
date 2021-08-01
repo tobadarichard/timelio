@@ -17,6 +17,9 @@ import { VerifyAccountComponent } from './components/verify-account/verify-accou
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { ManageAccountComponent } from './components/manage-account/manage-account.component';
 import { CreateEmploiComponent } from './components/create-emploi/create-emploi.component';
+import { FindEmploiComponent } from './components/find-emploi/find-emploi.component';
+import { EmploiComponent } from './components/emploi/emploi.component';
+import { UserEmploiListComponent } from './components/find-emploi/user-emploi-list/user-emploi-list.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,10 @@ import { CreateEmploiComponent } from './components/create-emploi/create-emploi.
     VerifyAccountComponent,
     ResetPasswordComponent,
     ManageAccountComponent,
-    CreateEmploiComponent
+    CreateEmploiComponent,
+    FindEmploiComponent,
+    EmploiComponent,
+    UserEmploiListComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +44,8 @@ import { CreateEmploiComponent } from './components/create-emploi/create-emploi.
     AppRoutingModule,
     NoopAnimationsModule,
     MatSnackBarModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],

@@ -36,9 +36,14 @@ export class CreateEmploiComponent implements OnInit {
     else{
       result = this.emploiService.createEmploi(values.nom);
     }
-    result.subscribe(() => {
+    result.subscribe((emploi) => {
       this.snackbar.open('Emploi du temps crée');
-      //TODO : rediriger vers emploi crée
+      if (!this.authService.isLoggedIn() || values.publique){
+        this.router.navigate(['/emplois/public',emploi.codeAcces]);
+      }
+      else{
+        this.router.navigate(['/emplois/private',emploi.id]);
+      }
     }, () => {this.snackbar.open('Une erreur est survenue')});
   }
 

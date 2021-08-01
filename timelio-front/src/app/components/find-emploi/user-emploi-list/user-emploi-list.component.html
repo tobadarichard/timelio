@@ -1,0 +1,31 @@
+<div *ngIf="currentPage" class="text-center">
+    {{currentPage.totalElements == 0 ?
+    'Vous n\'avez pas d\'emplois du temps' :
+    currentPage.totalElements + ' emploi(s) du temps : ' }}
+</div>
+
+<div *ngIf="!hasError && currentPage && currentPage.totalElements != 0">
+    <div class="list-group mt-2 mb-2" *ngFor="let emploi of currentPage.content">
+        <a [routerLink]="['/emplois/private',emploi.id]" class="list-group-item list-group-item-action">
+            {{emploi.nom}}
+        </a>
+    </div>
+    <ul class="pagination justify-content-center">
+        <li class="page-item" [ngClass]="currentPage.first ? 'disabled' : ''">
+            <button class="page-link" [disabled]="currentPage.first" (click)="previousPage()">Précédent</button>
+        </li>
+        <li *ngIf="!currentPage.first" class="page-item">
+            <button class="page-link" (click)="previousPage()">{{page-1}}</button>
+        </li>
+        <li class="page-item active">
+            <button class="page-link">{{page}}</button>
+        </li>
+        <li *ngIf="!currentPage.last" class="page-item">
+            <button class="page-link" (click)="nextPage()">{{page+1}}</button>
+        </li>
+        <li class="page-item" [ngClass]="currentPage.last ? 'disabled' : ''">
+            <button class="page-link" [disabled]="currentPage.last" (click)="nextPage()">Suivant</button>
+        </li>
+    </ul>
+</div>
+<div *ngIf="hasError" class="alert alert-danger">Une erreur est survenue</div>
