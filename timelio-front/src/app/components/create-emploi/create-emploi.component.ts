@@ -31,7 +31,7 @@ export class CreateEmploiComponent implements OnInit {
     this.emploiForm.reset();
     var result: Observable<EmploiTemps>;
     if (this.authService.isLoggedIn()){
-      result = this.emploiService.createEmploiUser(values.nom,values.publique);
+      result = this.emploiService.createUserEmploi(values.nom,values.publique);
     }
     else{
       result = this.emploiService.createEmploi(values.nom);

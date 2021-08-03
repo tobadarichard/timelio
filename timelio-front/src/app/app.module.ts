@@ -20,6 +20,8 @@ import { CreateEmploiComponent } from './components/create-emploi/create-emploi.
 import { FindEmploiComponent } from './components/find-emploi/find-emploi.component';
 import { EmploiComponent } from './components/emploi/emploi.component';
 import { UserEmploiListComponent } from './components/find-emploi/user-emploi-list/user-emploi-list.component';
+import { DeleteEmploiModalComponent } from './components/emploi/delete-emploi-modal/delete-emploi-modal.component';
+import { UpdateEmploiModalComponent } from './components/emploi/update-emploi-modal/update-emploi-modal.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { UserEmploiListComponent } from './components/find-emploi/user-emploi-li
     CreateEmploiComponent,
     FindEmploiComponent,
     EmploiComponent,
-    UserEmploiListComponent
+    UserEmploiListComponent,
+    DeleteEmploiModalComponent,
+    UpdateEmploiModalComponent
   ],
   imports: [
     BrowserModule,

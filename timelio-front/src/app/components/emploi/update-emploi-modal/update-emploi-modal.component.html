@@ -1,0 +1,38 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title text-danger" id="confirmationModalLabel">Modifier l'emploi du temps</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form [formGroup]="emploiForm" #form="ngForm" (ngSubmit)="updateEmploi()">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <input class="form-control" type="text" name="nom" placeholder="Nom" formControlName="nom">
+                </div>
+                <div class="mb-3 row">
+                    <label for="code" class="col-auto col-form-label">ID : </label>
+                    <div class="col-auto">
+                        <input class="form-control-plaintext" readonly type="text" name="code" value="{{emploi.id}}">
+                    </div>
+                </div>
+                <div *ngIf="emploi.publique" class="mb-3 row">
+                    <label for="code" class="col-auto col-form-label">Code d'acces : </label>
+                    <div class="col-auto">
+                        <input class="form-control-plaintext" readonly type="text" name="code"
+                            value="{{emploi.codeAcces}}">
+                    </div>
+                </div>
+                <div *ngIf="isUserEmploi" class="mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="publique" formControlName="publique">
+                        <label class="form-check-label" for="publique">Emploi du temps publique</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary col-auto" type="submit" data-bs-dismiss="modal"
+                    [disabled]="form.invalid">Modifier</button>
+            </div>
+        </form>
+    </div>
+</div>

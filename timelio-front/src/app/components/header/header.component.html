@@ -1,6 +1,6 @@
 <nav class="navbar navbar-light navbar-expand-sm bg-light text-end d-xl-flex navigation-clean">
     <div class="container"><a class="navbar-brand" routerLink="/home">Timelio</a><button data-bs-toggle="collapse"
-            class="navbar-toggler" data-bs-target="#navcol-1"><i class="fa fa-toggle-down"></i></button>
+            class="navbar-toggler" data-bs-target="#navcol-1"><i class="fa fa-bars"></i></button>
         <span *ngIf="authService.isLoggedIn()" class="text-nowrap navbar-text">Bonjour {{ (authService.getUserInfos() |
             async )?.pseudo}}</span>
         <div class="collapse navbar-collapse justify-content-end container" id="navcol-1">

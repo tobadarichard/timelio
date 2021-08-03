@@ -1,1 +1,46 @@
-<p>emploi works!</p>
+<app-header></app-header>
+<div *ngIf="hasError" class="row">
+    <div class="alert alert-danger col-auto mx-auto mt-2">
+        Erreur: emploi du temps introuvable
+    </div>
+</div>
+<div *ngIf="emploi" class="ms-3">
+    <div class="d-flex flex-column flex-shrink-0 border rounded mw-auto" style="width: 280px;">
+        <div class="overflow-auto text-center">
+            <h3 class="text-primary">{{emploi.nom}}</h3>
+        </div>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li>
+                <button class="nav-link">
+                    Ajouter un evenement
+                </button>
+            </li>
+            <li>
+                <button class="nav-link">
+                    Chercher un evenement
+                </button>
+            </li>
+            <li>
+                <button class="nav-link" type="button" data-bs-toggle="modal"
+                data-bs-target="#updateEmploiModal">
+                    Modifier l'emploi
+                </button>
+            </li>
+            <li>
+                <button class="nav-link text-danger" type="button" data-bs-toggle="modal"
+                    data-bs-target="#confirmationModal">
+                    Supprimer l'emploi
+                </button>
+            </li>
+        </ul>
+    </div>
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-hidden="true">
+        <app-delete-emploi-modal [isUserEmploi]="isUserEmploi" [emploi]="emploi"></app-delete-emploi-modal>  
+    </div>
+    <div class="modal fade" id="updateEmploiModal" tabindex="-1" aria-hidden="true">
+        <app-update-emploi-modal (updateEmploiEvent)="this.emploi = $event" 
+            [isUserEmploi]="isUserEmploi" [emploi]="emploi"></app-update-emploi-modal>  
+    </div>
+</div>
+<app-footer></app-footer>
