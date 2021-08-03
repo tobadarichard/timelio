@@ -4,43 +4,75 @@
         Erreur: emploi du temps introuvable
     </div>
 </div>
-<div *ngIf="emploi" class="ms-3">
-    <div class="d-flex flex-column flex-shrink-0 border rounded mw-auto" style="width: 280px;">
-        <div class="overflow-auto text-center">
-            <h3 class="text-primary">{{emploi.nom}}</h3>
+<div *ngIf="emploi" class="container-fluid">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-auto">
+            <button (click)="previous()" class="btn"><span class="fa fa-arrow-left"></span></button>
         </div>
-        <hr>
-        <ul class="nav nav-pills flex-column mb-auto">
-            <li>
-                <button class="nav-link">
-                    Ajouter un evenement
-                </button>
-            </li>
-            <li>
-                <button class="nav-link">
-                    Chercher un evenement
-                </button>
-            </li>
-            <li>
-                <button class="nav-link" type="button" data-bs-toggle="modal"
-                data-bs-target="#updateEmploiModal">
-                    Modifier l'emploi
-                </button>
-            </li>
-            <li>
-                <button class="nav-link text-danger" type="button" data-bs-toggle="modal"
-                    data-bs-target="#confirmationModal">
-                    Supprimer l'emploi
-                </button>
-            </li>
-        </ul>
+        <div class="col-auto">
+            <mat-label>{{currentSelection}}</mat-label>
+            <input hidden matInput [matDatepicker]="picker" (dateChange)="changeDate($event)">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </div>
+        <div class="col-auto">
+            <button (click)="next()" class="btn"><span class="fa fa-arrow-right"></span></button>
+        </div>
+        <div class="col-auto text-primary">
+            {{emploi.nom}}
+        </div>
+        <div class="col-auto">
+            <ul class="nav nav-pills flex-row">
+                <li>
+                    <button class="nav-link">
+                        Ajouter un evenement
+                    </button>
+                </li>
+                <li>
+                    <button class="nav-link">
+                        Chercher un evenement
+                    </button>
+                </li>
+                <li>
+                    <button class="nav-link" type="button" data-bs-toggle="modal" data-bs-target="#updateEmploiModal">
+                        Modifier l'emploi
+                    </button>
+                </li>
+                <li>
+                    <button class="nav-link text-danger" type="button" data-bs-toggle="modal"
+                        data-bs-target="#confirmationModal">
+                        Supprimer l'emploi
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div *ngFor="let day of days" class="col border">{{day}}</div>
+        </div>
+        <div *ngFor="let week of weeks" class="row">
+            <div *ngFor="let day of week" class="col border text-break">
+                <h6 [ngClass]="day.month() != currentMonth ? 'text-muted' : ''">{{day.format('D MMMM')}}</h6>
+                <ul class="list-unstyled">
+                    <li>
+                        <button class="btn badge" style="background-color: violet;" (click)="emploi.nom='eeeee'">
+                            Bonjour
+                        </button>
+                    </li>
+                    <li>Bonjour</li>
+                    <li>Bonjour</li>
+                    <li>Bonjour</li>
+                </ul>
+            </div>
+        </div>
     </div>
     <div class="modal fade" id="confirmationModal" tabindex="-1" aria-hidden="true">
-        <app-delete-emploi-modal [isUserEmploi]="isUserEmploi" [emploi]="emploi"></app-delete-emploi-modal>  
+        <app-delete-emploi-modal [isUserEmploi]="isUserEmploi" [emploi]="emploi"></app-delete-emploi-modal>
     </div>
     <div class="modal fade" id="updateEmploiModal" tabindex="-1" aria-hidden="true">
-        <app-update-emploi-modal (updateEmploiEvent)="this.emploi = $event" 
-            [isUserEmploi]="isUserEmploi" [emploi]="emploi"></app-update-emploi-modal>  
+        <app-update-emploi-modal (updateEmploiEvent)="this.emploi = $event" [isUserEmploi]="isUserEmploi"
+            [emploi]="emploi"></app-update-emploi-modal>
     </div>
 </div>
 <app-footer></app-footer>
