@@ -51,18 +51,29 @@
         <div class="row">
             <div *ngFor="let day of days" class="col border">{{day}}</div>
         </div>
-        <div *ngFor="let week of weeks" class="row">
-            <div *ngFor="let day of week" class="col border text-break">
-                <h6 [ngClass]="day.month() != currentMonth ? 'text-muted' : ''">{{day.format('D MMMM')}}</h6>
+        <div *ngFor="let week of calendarPage" class="row">
+            <div *ngFor="let dayCell of week" class="col border text-break">
+                <h6 [ngClass]="dayCell.date.month() != currentMonth ? 'text-muted' : ''">
+                    {{dayCell.date.format('D MMMM')}}
+                </h6>
                 <ul class="list-unstyled">
-                    <li>
-                        <button class="btn badge" style="background-color: violet;" (click)="emploi.nom='eeeee'">
-                            Bonjour
+                    <li *ngIf="dayCell.evenements.length > 3">
+                        <button class="btn badge bg-danger rounded-pill">
+                            <span class="d-inline-block text-truncate" style="max-width: 120px;">
+                                {{dayCell.evenements.length}} evenements
+                            </span>
                         </button>
                     </li>
-                    <li>Bonjour</li>
-                    <li>Bonjour</li>
-                    <li>Bonjour</li>
+                    <div *ngIf="dayCell.evenements.length <= 3">
+                        <li *ngFor="let event of dayCell.evenements" class="mb-1">
+                            <button class="btn badge" [ngStyle]="{'background-color': event.couleur}">
+                                <span class="d-inline-block text-truncate" style="max-width: 120px;">
+                                    {{event.description}}
+                                </span>
+                            </button>
+
+                        </li>
+                    </div>
                 </ul>
             </div>
         </div>
