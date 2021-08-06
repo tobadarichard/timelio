@@ -24,7 +24,7 @@
         <div class="col-auto">
             <ul class="nav nav-pills flex-row">
                 <li>
-                    <button class="nav-link">
+                    <button class="nav-link" data-bs-toggle="modal" data-bs-target="#createEventModal">
                         Ajouter un evenement
                     </button>
                 </li>
@@ -58,7 +58,8 @@
                 </h6>
                 <ul class="list-unstyled">
                     <li *ngIf="dayCell.evenements.length > 3">
-                        <button class="btn badge bg-danger rounded-pill">
+                        <button class="btn badge bg-danger rounded-pill" type="button" data-bs-toggle="modal"
+                            data-bs-target="#listEventsModal" (click)="selectedCell = dayCell">
                             <span class="d-inline-block text-truncate" style="max-width: 120px;">
                                 {{dayCell.evenements.length}} evenements
                             </span>
@@ -80,8 +81,11 @@
         </div>
     </div>
 
-    <app-details-event-modal [evenement]="selectedEvent" (emitter)="updateEvent($event)" [prefix]="getPrefix()">
+    <app-details-event-modal [evenement]="selectedEvent" (emitter)="changeOnEvent($event)" [prefix]="getPrefix()">
     </app-details-event-modal>
+
+    <app-create-event-modal (emitter)="changeOnEvent($event)" [prefix]="getPrefix()">
+    </app-create-event-modal>
 
     <div class="modal fade" id="confirmationModal" tabindex="-1" aria-hidden="true">
         <app-delete-emploi-modal [isUserEmploi]="isUserEmploi" [emploi]="emploi"></app-delete-emploi-modal>
@@ -89,6 +93,30 @@
     <div class="modal fade" id="updateEmploiModal" tabindex="-1" aria-hidden="true">
         <app-update-emploi-modal (updateEmploiEvent)="this.emploi = $event" [isUserEmploi]="isUserEmploi"
             [emploi]="emploi"></app-update-emploi-modal>
+    </div>
+
+    <div class="modal fade" id="listEventsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Evenements</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div *ngIf="!selectedCell || selectedCell.evenements.length == 0" class="modal-body">
+                    Pas d'evenements
+                </div>
+                <div *ngIf="selectedCell && selectedCell.evenements.length > 0" class="modal-body">
+                    <div class="list-group">
+                        <button *ngFor="let event of selectedCell.evenements"
+                            class="list-group-item list-group-item-action mt-2" type="button"
+                            data-bs-target="#eventDetailsModal" data-bs-toggle="modal" data-bs-dismiss="modal"
+                            (click)="showEventDetails(event.id)" [ngStyle]="{'background-color': event.couleur}">
+                            {{event.description}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <app-footer></app-footer>

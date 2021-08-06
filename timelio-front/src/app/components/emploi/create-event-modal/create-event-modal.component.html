@@ -1,0 +1,83 @@
+<div class="modal fade" id="createEventModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Ajouter un evenement
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form #form="ngForm" (ngSubmit)="creerEvenement(form)">
+                <div class="modal-body">
+                    <div class="mb-3 row">
+                        <label class="col-auto col-form-label">Description : </label>
+                        <div class="col-auto">
+                            <input class='form-control' type="text" name="description" required
+                                [(ngModel)]="event.description">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-auto col-form-label">Couleur : </label>
+                        <div class="col-auto">
+                            <input type="color" name="couleur" required [(ngModel)]="event.couleur">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-auto col-form-label">Date de debut :</label>
+                        <div class="col-auto">
+                            <input class="form-control" type="date" name="dateDebut" required
+                                [(ngModel)]="event.dateDebut">
+                        </div>
+                        <div class="col-auto">
+                            <label class="col-form-label">à</label>
+                        </div>
+                        <div class="col-auto">
+                            <input class="form-control" type="time" name="heureDebut" required
+                                [(ngModel)]="event.heureDebut">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-auto col-form-label">Date de fin :
+                        </label>
+                        <div class="col-auto">
+                            <input class="form-control" type="date" name="dateFin" required [(ngModel)]="event.dateFin">
+                        </div>
+                        <div class="col-auto">
+                            <label class="col-form-label">à</label>
+                        </div>
+                        <div class="col-auto">
+                            <input class="form-control" type="time" name="heureFin" required
+                                [(ngModel)]="event.heureFin">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="periodique" name="periodique"
+                                [(ngModel)]="event.periodique">
+                            <label for="periodique" class="form-check-label">Evenement periodique</label>
+                        </div>
+                    </div>
+                    <div *ngIf="event.periodique" class="mb-3 row">
+                        <label class="col col-form-label">Periode :</label>
+                        <div class="col-auto">
+                            <label class="col-form-label">Tous les</label>
+                        </div>
+                        <div class="col-auto">
+                            <input class="form-control" type="number" name="periodeJour" min="1"
+                                [(ngModel)]="event.periodeJour">
+                        </div>
+                        <div class="col-auto">
+                            <label class="col-form-label">jours</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary col-auto" type="submit" [disabled]="form.invalid">
+                        Creer
+                    </button>
+                    <button class="btn btn-secondary col-auto" type="button" data-bs-dismiss="modal">Annuler</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

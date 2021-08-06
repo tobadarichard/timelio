@@ -15,7 +15,6 @@ export class EvenementService {
   updateEvent(prefix: string, event: ParsedEvenement): Observable<Evenement> {
     return this.httpClient.put<Evenement>(environment.url + prefix + '/events/' + event.id,
       {
-        id: event.id,
         dateDebut: event.dateDebut.toISOString(),
         duree: event.duree.toISOString(),
         description: event.description,
@@ -28,5 +27,17 @@ export class EvenementService {
   deleteEvent(prefix: string, id: number): Observable<string> {
     return this.httpClient.delete(environment.url + prefix + '/events/' + id,
       { responseType: 'text' });
+  }
+
+  createEvent(prefix: string, event: ParsedEvenement): Observable<Evenement> {
+    return this.httpClient.post<Evenement>(environment.url + prefix + '/events',
+      {
+        dateDebut: event.dateDebut.toISOString(),
+        duree: event.duree.toISOString(),
+        description: event.description,
+        couleur: event.couleur,
+        periodique: event.periodique,
+        periode: event.periode.toISOString()
+      });
   }
 }

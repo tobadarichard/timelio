@@ -12,7 +12,7 @@
             Token expiré
             </div>
             <div class="mb-3">
-                <button class="btn btn-primary d-block w-100" (click)="askNewToken()"
+                <button type="button" class="btn btn-primary d-block w-100" (click)="askNewToken()"
                     [disabled]="askNewTokenResult">Renvoyer un mail de confirmation</button>
                 <div [ngSwitch]="askNewTokenResult | async">
                     <div *ngSwitchCase="true" class="alert alert-success">

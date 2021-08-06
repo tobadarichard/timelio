@@ -29,6 +29,7 @@ export class EmploiComponent implements OnInit {
   emploi: EmploiTemps | null = null;
   evenements: ParsedEvenement[] = [];
   selectedEvent: ParsedEvenement | null = null;
+  selectedCell: CalendarCell | null = null;
 
   days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
   startingDay = dayjs();
@@ -204,9 +205,11 @@ export class EmploiComponent implements OnInit {
     return this.emploi.publique ? '/emplois/' + this.emploi.codeAcces : '/user/emplois/' + this.emploi.id;
   }
 
-  updateEvent(change: ChangeOnEvent) {
+  changeOnEvent(change: ChangeOnEvent) {
     switch (change.type) {
       case EventAction.CREATED:
+        this.evenements.push(change.value);
+        this.snackbar.open('Evenement crée');
         break;
       case EventAction.DELETED:
         this.evenements = this.evenements.filter((e) => e.id != change.value.id);

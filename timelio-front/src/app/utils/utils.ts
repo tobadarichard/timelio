@@ -39,12 +39,15 @@ function fromFormToParsed(form: EvenementForm): ParsedEvenement {
     let duree = dayjs.duration(dateFin.diff(dateDebut));
 
     let periode = dayjs.duration(0);
-    if (form.periodique && form.periodeJour <= 1) {
-        throw new Error('Periode invalide');
+    if (form.periodique) {
+        if (form.periodeJour <= 0) {
+            throw new Error('Periode invalide');
+        }
+        else {
+            periode = dayjs.duration({ days: form.periodeJour });
+        }
     }
-    else if (form.periodique){
-        periode = dayjs.duration({ days: form.periodeJour});
-    }
+
     return {
         id: form.id,
         dateDebut: dateDebut,
@@ -59,17 +62,7 @@ function fromFormToParsed(form: EvenementForm): ParsedEvenement {
 
 function fromParsedToForm(evenement: ParsedEvenement | null): EvenementForm {
     if (!evenement) {
-        return {
-            id: 0,
-            dateDebut: '',
-            heureDebut: '',
-            dateFin: '',
-            heureFin: '',
-            description: '',
-            couleur: '',
-            periodique: false,
-            periodeJour: 1
-        };
+        return getEventForm();
     }
     let periodeJour = evenement.periodique ? evenement.periode.asDays() : 1;
     return {
@@ -85,4 +78,18 @@ function fromParsedToForm(evenement: ParsedEvenement | null): EvenementForm {
     };
 }
 
-export { toParsed, fromFormToParsed, fromParsedToForm };
+function getEventForm(): EvenementForm{
+    return {
+        id: 0,
+        dateDebut: '',
+        heureDebut: '',
+        dateFin: '',
+        heureFin: '',
+        description: '',
+        couleur: '',
+        periodique: false,
+        periodeJour: 1
+    }; 
+}
+
+export { toParsed, fromFormToParsed, fromParsedToForm , getEventForm};

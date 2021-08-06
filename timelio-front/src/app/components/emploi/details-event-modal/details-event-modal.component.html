@@ -86,10 +86,10 @@
                     <button class="btn btn-primary col-auto" type="submit" [disabled]="form.invalid">
                         Sauvegarder
                     </button>
-                    <button class="btn btn-secondary col-auto" (click)="annulerModif()">Annuler</button>
+                    <button type="button" class="btn btn-secondary col-auto" (click)="annulerModif()">Annuler</button>
                 </div>
                 <div *ngIf="!enModif" class="modal-footer">
-                    <button class="btn btn-primary col-auto" (click)="enModif = true">Modifier</button>
+                    <button type="button" class="btn btn-primary col-auto" (click)="enModif = true">Modifier</button>
                     <button class="btn btn-danger" type="button" data-bs-target="#confDeleteModal"
                         data-bs-toggle="modal" data-bs-dismiss="modal">Supprimer l'evenement</button>
                 </div>

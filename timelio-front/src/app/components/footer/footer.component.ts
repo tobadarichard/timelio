@@ -8,7 +8,6 @@ import { Component, OnInit } from '@angular/core';
 export class FooterComponent implements OnInit {
 
   constructor() { }
-//TODO: changer url github et mail
   ngOnInit(): void {
   }
 

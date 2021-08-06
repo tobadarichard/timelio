@@ -27,6 +27,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { DetailsEventModalComponent } from './components/emploi/details-event-modal/details-event-modal.component';
+import { CreateEventModalComponent } from './components/emploi/create-event-modal/create-event-modal.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { DetailsEventModalComponent } from './components/emploi/details-event-mo
     UserEmploiListComponent,
     DeleteEmploiModalComponent,
     UpdateEmploiModalComponent,
-    DetailsEventModalComponent
+    DetailsEventModalComponent,
+    CreateEventModalComponent
   ],
   imports: [
     BrowserModule,
