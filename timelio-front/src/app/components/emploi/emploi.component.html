@@ -66,18 +66,23 @@
                     </li>
                     <div *ngIf="dayCell.evenements.length <= 3">
                         <li *ngFor="let event of dayCell.evenements" class="mb-1">
-                            <button class="btn badge" [ngStyle]="{'background-color': event.couleur}">
+                            <button class="btn badge" [ngStyle]="{'background-color': event.couleur}" type="button"
+                                data-bs-toggle="modal" data-bs-target="#eventDetailsModal"
+                                (click)="showEventDetails(event.id)">
                                 <span class="d-inline-block text-truncate" style="max-width: 120px;">
                                     {{event.description}}
                                 </span>
                             </button>
-
                         </li>
                     </div>
                 </ul>
             </div>
         </div>
     </div>
+
+    <app-details-event-modal [evenement]="selectedEvent" (emitter)="updateEvent($event)" [prefix]="getPrefix()">
+    </app-details-event-modal>
+
     <div class="modal fade" id="confirmationModal" tabindex="-1" aria-hidden="true">
         <app-delete-emploi-modal [isUserEmploi]="isUserEmploi" [emploi]="emploi"></app-delete-emploi-modal>
     </div>

@@ -1,4 +1,4 @@
-import { Evenement } from "./evenement";
+import { Evenement } from "./evenements/evenement";
 
 export interface EmploiTemps{
     id: number,

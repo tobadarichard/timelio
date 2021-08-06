@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EmploiTemps } from 'src/app/model/emploi-temps';
-import { Evenement } from 'src/app/model/evenement';
-import { ParsedEvenement } from 'src/app/model/parsed-evenement';
 import { EmploiService } from 'src/app/services/emploi/emploi.service';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { CalendarCell } from 'src/app/model/calendar-cell';
-import { EvenementSummary } from 'src/app/model/evenement-summary';
+import { EvenementSummary } from 'src/app/model/evenements/evenement-summary';
+import { ParsedEvenement } from 'src/app/model/evenements/parsed-evenement';
+import { toParsed } from 'src/app/utils/utils';
 import * as dayjs from 'dayjs';
 import * as duration from 'dayjs/plugin/duration';
 import 'dayjs/locale/fr';
+import { ChangeOnEvent } from './events/change-on-event';
+import { EventAction } from './events/event-action';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 dayjs.extend(duration);
@@ -25,6 +28,7 @@ export class EmploiComponent implements OnInit {
   hasError = false;
   emploi: EmploiTemps | null = null;
   evenements: ParsedEvenement[] = [];
+  selectedEvent: ParsedEvenement | null = null;
 
   days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
   startingDay = dayjs();
@@ -34,9 +38,8 @@ export class EmploiComponent implements OnInit {
   currentSelection = '';
   currentMonth = 1;
 
-  constructor(private route: ActivatedRoute, private emploiService: EmploiService) {
-
-  }
+  constructor(private route: ActivatedRoute, private emploiService: EmploiService,
+    private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
     var code = this.route.snapshot.paramMap.get('code') || '';
@@ -45,7 +48,7 @@ export class EmploiComponent implements OnInit {
 
     (this.isUserEmploi ? this.emploiService.getUserEmploi(id) : this.emploiService.getEmploi(code))
       .subscribe((emploi) => {
-        this.evenements = emploi.evenements.map((event) => this.toParsed(event));
+        this.evenements = emploi.evenements.map((event) => toParsed(event));
         this.updateCalendar();
         this.emploi = emploi;
       }, () => { this.hasError = true; });
@@ -110,7 +113,7 @@ export class EmploiComponent implements OnInit {
     let distance = this.startingDay.diff(dateDebut) / 1000;
     if (distance > 0) {
       let mult = Math.floor(distance / periode);
-      dateDebut = dateDebut.add(mult * periode,'second');
+      dateDebut = dateDebut.add(mult * periode, 'second');
     }
     dateFin = dateDebut.add(event.duree.asSeconds(), 'seconds');
 
@@ -125,8 +128,8 @@ export class EmploiComponent implements OnInit {
         periodique: event.periodique,
         periode: event.periode
       });
-      dateDebut = dateDebut.add(periode,'second');
-      dateFin = dateFin.add(periode,'second');
+      dateDebut = dateDebut.add(periode, 'second');
+      dateFin = dateFin.add(periode, 'second');
     }
   }
 
@@ -144,22 +147,6 @@ export class EmploiComponent implements OnInit {
   updateCalendar(): void {
     this.changeCalendarPage();
     this.putCalendarEvents();
-  }
-
-  toParsed(event: Evenement): ParsedEvenement {
-    var duree = dayjs.duration(event.duree);
-    var dateDebut = dayjs(event.dateDebut);
-
-    return {
-      id: event.id,
-      dateDebut: dateDebut,
-      dateFin: dateDebut.add(duree.asSeconds(), 'seconds'),
-      duree: duree,
-      description: event.description,
-      couleur: event.couleur,
-      periodique: event.periodique,
-      periode: dayjs.duration(event.periode)
-    };
   }
 
   changeCalendarPage(): void {
@@ -204,5 +191,33 @@ export class EmploiComponent implements OnInit {
       this.startingDay = this.startingDay.set('month', this.currentMonth - 1).set('date', 1);
     }
     this.updateCalendar();
+  }
+
+  showEventDetails(id: number) {
+    this.selectedEvent = this.evenements.find((e) => e.id == id) || null;
+  }
+
+  getPrefix(): string {
+    if (!this.emploi) {
+      return '';
+    }
+    return this.emploi.publique ? '/emplois/' + this.emploi.codeAcces : '/user/emplois/' + this.emploi.id;
+  }
+
+  updateEvent(change: ChangeOnEvent) {
+    switch (change.type) {
+      case EventAction.CREATED:
+        break;
+      case EventAction.DELETED:
+        this.evenements = this.evenements.filter((e) => e.id != change.value.id);
+        this.snackbar.open('Evenement supprimé');
+        break;
+      case EventAction.UPDATED:
+        let index = this.evenements.findIndex((e) => e.id == change.value.id);
+        this.evenements[index] = change.value;
+        this.snackbar.open('Evenement modifié');
+        break;
+    }
+    this.putCalendarEvents();
   }
 }

@@ -26,6 +26,7 @@ import { UpdateEmploiModalComponent } from './components/emploi/update-emploi-mo
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DetailsEventModalComponent } from './components/emploi/details-event-modal/details-event-modal.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
     EmploiComponent,
     UserEmploiListComponent,
     DeleteEmploiModalComponent,
-    UpdateEmploiModalComponent
+    UpdateEmploiModalComponent,
+    DetailsEventModalComponent
   ],
   imports: [
     BrowserModule,
