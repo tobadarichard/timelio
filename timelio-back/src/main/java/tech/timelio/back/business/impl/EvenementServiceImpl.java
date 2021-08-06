@@ -14,7 +14,7 @@ import tech.timelio.back.dao.EvenementDAO;
 import tech.timelio.back.modele.Evenement;
 @Repository
 public class EvenementServiceImpl implements EvenementService {
-
+//TODO: Contraintes creation/modif evenements (date debut/fin, periode, durée, etc)
 	@Autowired
 	protected EvenementDAO eventDAO;
 	

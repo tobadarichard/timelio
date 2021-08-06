@@ -5,7 +5,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +23,6 @@ import tech.timelio.back.forms.emploi.EmploiTempsUserForm;
 import tech.timelio.back.modele.EmploiTemps;
 
 @RestController
-@CrossOrigin(origins = "${timelio.url-front}")
 public class EmploisTempsController {
 	@Autowired
 	protected EmploiTempsService serviceEmploi;

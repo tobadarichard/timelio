@@ -29,7 +29,12 @@ public class AuthenticationFilter implements Filter {
 			FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
-
+		
+		if (httpRequest.getMethod().equals("OPTIONS")) {
+			chain.doFilter(httpRequest, httpResponse);
+			return;
+		}
+		
 		String token = httpRequest.getHeader("Authorization");
 		if (token == null || token.length() < 7) {
 			httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED);

@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.Period;
 import java.time.ZonedDateTime;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -15,14 +16,14 @@ public class EventForm {
 	protected ZonedDateTime dateDebut;
 	@NotNull
 	protected Duration duree;
-	@Pattern(regexp = "^\\w+$")
+	@NotEmpty
 	protected String description;
 	@Pattern(regexp = "^#(?:[0-9a-fA-F]{3}){1,2}$")
 	protected String couleur;
 	@NotNull
 	protected boolean periodique;
 	protected Period periode;
-	
+
 	public Evenement getEvent() throws InvalidFormException {
 		Evenement event = new Evenement();
 		event.setDateDebut(dateDebut);
@@ -30,10 +31,12 @@ public class EventForm {
 		event.setDescription(description);
 		event.setCouleur(couleur);
 		event.setPeriodique(periodique);
-		
-		if (periodique && periode == null)
+
+		if (periodique && (periode == null || periode.isNegative() || periode.isZero())) {	
 			throw new InvalidFormException("La période doit être définie");
-		
+		}
+
+
 		event.setPeriode(periodique ? periode : null);
 		return event;
 	}
