@@ -3,7 +3,7 @@
 Front-end de l'application Timelio réalisé avec Angular (12)
 
 ## Installation
-* Dans le fichier [environnement](src/app/environments/environment.prod.ts), remplacer l'attribut 'url' par l'url 
+* Dans le fichier [environnement](src/environments/environment.prod.ts), remplacer l'attribut 'url' par l'url 
 du serveur.
 * Installer les dependances : npm install
 * Construire l'application ; ng build
