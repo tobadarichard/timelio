@@ -1,0 +1,122 @@
+<app-header></app-header>
+<div *ngIf="hasError" class="row">
+    <div class="alert alert-danger col-auto mx-auto mt-2">
+        Erreur: emploi du temps introuvable
+    </div>
+</div>
+<div *ngIf="emploi" class="container-fluid">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-auto">
+            <button (click)="previous()" class="btn"><span class="fa fa-arrow-left"></span></button>
+        </div>
+        <div class="col-auto">
+            <mat-label>{{currentSelection}}</mat-label>
+            <input hidden matInput [matDatepicker]="picker" (dateChange)="changeDate($event)">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </div>
+        <div class="col-auto">
+            <button (click)="next()" class="btn"><span class="fa fa-arrow-right"></span></button>
+        </div>
+        <div class="col-auto text-primary">
+            {{emploi.nom}}
+        </div>
+        <div class="col-auto">
+            <ul class="nav nav-pills flex-row">
+                <li>
+                    <button class="nav-link" data-bs-toggle="modal" data-bs-target="#createEventModal">
+                        Ajouter un evenement
+                    </button>
+                </li>
+                <li>
+                    <button class="nav-link">
+                        Chercher un evenement
+                    </button>
+                </li>
+                <li>
+                    <button class="nav-link" type="button" data-bs-toggle="modal" data-bs-target="#updateEmploiModal">
+                        Modifier l'emploi
+                    </button>
+                </li>
+                <li>
+                    <button class="nav-link text-danger" type="button" data-bs-toggle="modal"
+                        data-bs-target="#confirmationModal">
+                        Supprimer l'emploi
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div *ngFor="let day of days" class="col border">{{day}}</div>
+        </div>
+        <div *ngFor="let week of calendarPage" class="row">
+            <div *ngFor="let dayCell of week" class="col border text-break">
+                <h6 [ngClass]="dayCell.date.month() != currentMonth ? 'text-muted' : ''">
+                    {{dayCell.date.format('D MMMM')}}
+                </h6>
+                <ul class="list-unstyled">
+                    <li *ngIf="dayCell.evenements.length > 3">
+                        <button class="btn badge bg-danger rounded-pill" type="button" data-bs-toggle="modal"
+                            data-bs-target="#listEventsModal" (click)="selectedCell = dayCell">
+                            <span class="d-inline-block text-truncate" style="max-width: 120px;">
+                                {{dayCell.evenements.length}} evenements
+                            </span>
+                        </button>
+                    </li>
+                    <div *ngIf="dayCell.evenements.length <= 3">
+                        <li *ngFor="let event of dayCell.evenements" class="mb-1">
+                            <button class="btn badge" [ngStyle]="{'background-color': event.couleur}" type="button"
+                                data-bs-toggle="modal" data-bs-target="#eventDetailsModal"
+                                (click)="showEventDetails(event.id)">
+                                <span class="d-inline-block text-truncate" style="max-width: 120px;">
+                                    {{event.description}}
+                                </span>
+                            </button>
+                        </li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <app-details-event-modal [evenement]="selectedEvent" (emitter)="changeOnEvent($event)" [prefix]="getPrefix()">
+    </app-details-event-modal>
+
+    <app-create-event-modal (emitter)="changeOnEvent($event)" [prefix]="getPrefix()">
+    </app-create-event-modal>
+
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-hidden="true">
+        <app-delete-emploi-modal [isUserEmploi]="isUserEmploi" [emploi]="emploi"></app-delete-emploi-modal>
+    </div>
+    <div class="modal fade" id="updateEmploiModal" tabindex="-1" aria-hidden="true">
+        <app-update-emploi-modal (updateEmploiEvent)="this.emploi = $event" [isUserEmploi]="isUserEmploi"
+            [emploi]="emploi"></app-update-emploi-modal>
+    </div>
+
+    <div class="modal fade" id="listEventsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Evenements</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div *ngIf="!selectedCell || selectedCell.evenements.length == 0" class="modal-body">
+                    Pas d'evenements
+                </div>
+                <div *ngIf="selectedCell && selectedCell.evenements.length > 0" class="modal-body">
+                    <div class="list-group">
+                        <button *ngFor="let event of selectedCell.evenements"
+                            class="list-group-item list-group-item-action mt-2" type="button"
+                            data-bs-target="#eventDetailsModal" data-bs-toggle="modal" data-bs-dismiss="modal"
+                            (click)="showEventDetails(event.id)" [ngStyle]="{'background-color': event.couleur}">
+                            {{event.description}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

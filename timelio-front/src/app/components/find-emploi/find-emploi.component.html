@@ -1,0 +1,21 @@
+<app-header></app-header>
+<section class="login-clean">
+    <div class="main-div">
+        <h2 class="text-center">Saisir le code d'un emploi du temps</h2>
+        <div class="row">
+            <input type="text" class="form-control" placeholder="Code" name="code" [(ngModel)]="code">
+        </div>
+        <div class="row mt-2">
+            <button class="btn btn-primary col-auto mx-auto" type="button" (click)="searchEmploi()">Chercher</button>
+        </div>
+        <div *ngIf="authService.isLoggedIn()" class="row mt-2">
+            <button class="btn btn-primary col-auto mx-auto" type="button" (click)="showEmplois = !showEmplois">
+                Mes emplois
+            </button>
+            <nav *ngIf="showEmplois" aria-label="Pagination" class="mt-2">
+                <app-user-emploi-list></app-user-emploi-list>
+              </nav>
+        </div>
+    </div>
+</section>
+<app-footer></app-footer>

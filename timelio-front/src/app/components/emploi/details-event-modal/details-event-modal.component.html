@@ -1,0 +1,118 @@
+<div class="modal fade" id="eventDetailsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    {{enModif ? 'Modifications' : 'Détails sur l\'evenement'}}
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form #form="ngForm" (ngSubmit)="modifierEvenement()">
+                <div class="modal-body">
+                    <div class="mb-3 row">
+                        <label class="col-auto col-form-label">Description : </label>
+                        <div class="col-auto">
+                            <input [ngClass]="enModif ? 'form-control' : 'form-control-plaintext'" type="text"
+                                name="description" [disabled]="!enModif" required
+                                [(ngModel)]="modifiedEvent.description">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-auto col-form-label">Couleur : </label>
+                        <div class="col-auto">
+                            <input type="color" name="couleur" [disabled]="!enModif" required
+                                [(ngModel)]="modifiedEvent.couleur">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-auto col-form-label">Date de debut :
+                            {{!enModif ? modifiedEvent.dateDebut + ' à ' + modifiedEvent.heureDebut : ''}}</label>
+                        <div *ngIf="enModif" class="row">
+                            <div class="col-auto">
+                                <input class="form-control" type="date" name="dateDebut" required
+                                    [(ngModel)]="modifiedEvent.dateDebut">
+                            </div>
+                            <div class="col-auto">
+                                <label class="col-form-label">à</label>
+                            </div>
+                            <div class="col-auto">
+                                <input class="form-control" type="time" name="heureDebut" required
+                                    [(ngModel)]="modifiedEvent.heureDebut">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-auto col-form-label">Date de fin :
+                            {{!enModif ? modifiedEvent.dateFin + ' à ' + modifiedEvent.heureFin : ''}}</label>
+                        <div *ngIf="enModif" class="row">
+                            <div class="col-auto">
+                                <input class="form-control" type="date" name="dateFin" required
+                                    [(ngModel)]="modifiedEvent.dateFin">
+                            </div>
+                            <div class="col-auto">
+                                <label class="col-form-label">à</label>
+                            </div>
+                            <div class="col-auto">
+                                <input class="form-control" type="time" name="heureFin" required
+                                    [(ngModel)]="modifiedEvent.heureFin">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="periodique" name="periodique"
+                                [(ngModel)]="modifiedEvent.periodique" [disabled]="!enModif">
+                            <label for="periodique" class="form-check-label">Evenement periodique</label>
+                        </div>
+                    </div>
+                    <div *ngIf="modifiedEvent.periodique" class="mb-3 row">
+                        <label class="col col-form-label">Periode :
+                            {{!enModif ? formatPeriode() : ''}}</label>
+                        <div *ngIf="enModif" class="col-auto row">
+                            <div class="col-auto">
+                                <label class="col-form-label">Tous les</label>
+                            </div>
+                            <div class="col-auto">
+                                <input class="form-control" type="number" name="periodeJour" min="1"
+                                    [(ngModel)]="modifiedEvent.periodeJour">
+                            </div>
+                            <div class="col-auto">
+                                <label class="col-form-label">jours</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="enModif" class="modal-footer">
+                    <button class="btn btn-primary col-auto" type="submit" [disabled]="form.invalid">
+                        Sauvegarder
+                    </button>
+                    <button type="button" class="btn btn-secondary col-auto" (click)="annulerModif()">Annuler</button>
+                </div>
+                <div *ngIf="!enModif" class="modal-footer">
+                    <button type="button" class="btn btn-primary col-auto" (click)="enModif = true">Modifier</button>
+                    <button class="btn btn-danger" type="button" data-bs-target="#confDeleteModal"
+                        data-bs-toggle="modal" data-bs-dismiss="modal">Supprimer l'evenement</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="confDeleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Êtes-vous sûr ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="supprimerEvenement()">
+                    Oui
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

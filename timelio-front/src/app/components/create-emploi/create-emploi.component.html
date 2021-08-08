@@ -1,0 +1,19 @@
+<app-header></app-header>
+<section class="contact-clean">
+    <form [formGroup]='emploiForm' #form="ngForm" (ngSubmit)="createEmploi()">
+        <h2 class="text-center">Nouvel emploi du temps</h2>
+        <div class="mb-3">
+            <input class="form-control" type="text" name="nom" placeholder="Nom" formControlName="nom">
+        </div>
+        <div *ngIf="authService.isLoggedIn()" class="mb-3">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="publique" formControlName="publique">
+                <label class="form-check-label" for="publique">Emploi du temps publique</label>
+            </div>
+        </div>
+        <div class="justify-content-center mb-3 row">
+            <button  class="btn btn-primary col-auto" type="submit" [disabled]="form.invalid">Créer</button>
+        </div>
+    </form>
+</section>
+<app-footer></app-footer>
