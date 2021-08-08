@@ -1,4 +1,4 @@
 export const environment = {
-  url: 'http://api.timelio.tech',
+  url: 'https://api.timelio.tech',
   production: true
 };
