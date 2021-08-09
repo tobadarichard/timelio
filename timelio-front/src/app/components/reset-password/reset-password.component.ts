@@ -13,6 +13,7 @@ export class ResetPasswordComponent implements OnInit {
   passwordForm: FormGroup;
   passwordsMatch = false;
   success = false;
+  sent = false;
   token: string;
   constructor(private accountService: AccountService, private fb: FormBuilder,
     private snackbar: MatSnackBar, private route: ActivatedRoute) {
@@ -37,7 +38,13 @@ export class ResetPasswordComponent implements OnInit {
       return;
     }
     this.accountService.resetMdpByToken(this.token, values.password).subscribe(
-      () => { this.success = true;}, () => { this.success = false;});
+      () => { 
+        this.success = true;
+        this.sent = true;
+      }, () => { 
+        this.success = false;
+        this.sent = true;
+      });
   }
 
 }

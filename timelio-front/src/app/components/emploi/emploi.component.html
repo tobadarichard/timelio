@@ -4,7 +4,7 @@
         Erreur: emploi du temps introuvable
     </div>
 </div>
-<div *ngIf="emploi" class="container-fluid">
+<div *ngIf="emploi" class="container-fluid" style="min-width: 1260px;">
     <div class="row justify-content-center align-items-center">
         <div class="col-auto">
             <button (click)="previous()" class="btn"><span class="fa fa-arrow-left"></span></button>
@@ -18,8 +18,8 @@
         <div class="col-auto">
             <button (click)="next()" class="btn"><span class="fa fa-arrow-right"></span></button>
         </div>
-        <div class="col-auto text-primary">
-            {{emploi.nom}}
+        <div class="col-auto">
+            <span class="d-inline-block text-truncate text-dark" style="max-width: 160px;">{{emploi.nom}}</span>
         </div>
         <div class="col-auto">
             <ul class="nav nav-pills flex-row">
@@ -67,8 +67,8 @@
                     </li>
                     <div *ngIf="dayCell.evenements.length <= 3">
                         <li *ngFor="let event of dayCell.evenements" class="mb-1">
-                            <button class="btn badge" [ngStyle]="{'background-color': event.couleur}" type="button"
-                                data-bs-toggle="modal" data-bs-target="#eventDetailsModal"
+                            <button class="btn badge" [ngStyle]="{'background-color': event.couleur}"
+                                type="button" data-bs-toggle="modal" data-bs-target="#eventDetailsModal"
                                 (click)="showEventDetails(event.id)">
                                 <span class="d-inline-block text-truncate" style="max-width: 120px;">
                                     {{event.description}}

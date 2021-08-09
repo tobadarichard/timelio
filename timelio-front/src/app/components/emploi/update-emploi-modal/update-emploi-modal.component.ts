@@ -25,7 +25,7 @@ export class UpdateEmploiModalComponent implements OnInit,OnChanges {
   constructor(private emploiService: EmploiService,private router: Router,
     private snackbar: MatSnackBar,private fb: FormBuilder) {
       this.emploiForm = fb.group({
-        'nom': ['', [Validators.required,Validators.pattern('\\w+')]],
+        'nom': ['', Validators.required],
         'publique': [false]
       });
      }
@@ -41,6 +41,10 @@ export class UpdateEmploiModalComponent implements OnInit,OnChanges {
 
   updateEmploi(): void{
     var values = this.emploiForm.value;
+    if (values.nom.trim() == ''){
+      this.snackbar.open('Le nom ne peut pas être vide');
+      return;
+    }
     this.emploiForm.reset();
     var result: Observable<EmploiTemps>;
     if (this.isUserEmploi){

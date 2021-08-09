@@ -140,6 +140,7 @@ export class EmploiComponent implements OnInit {
 
   addInPage(date: dayjs.Dayjs, summary: EvenementSummary): void {
     let difference = dayjs.duration(date.diff(this.startingDay));
+    if (difference.asSeconds() < 0){return;}
     let i = Math.floor(difference.asDays() / 7);
     let j = difference.asDays() % 7;
     this.calendarPage[i][j].evenements.push(summary);
