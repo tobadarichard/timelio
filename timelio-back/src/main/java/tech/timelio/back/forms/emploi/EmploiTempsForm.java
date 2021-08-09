@@ -1,9 +1,9 @@
 package tech.timelio.back.forms.emploi;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 
 public class EmploiTempsForm {
-	@NotEmpty
+	@NotBlank
 	protected String nom;
 
 	public String getNom() {

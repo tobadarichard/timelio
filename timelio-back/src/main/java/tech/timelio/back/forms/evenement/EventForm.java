@@ -4,7 +4,7 @@ import java.time.Duration;
 import java.time.Period;
 import java.time.ZonedDateTime;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -16,7 +16,7 @@ public class EventForm {
 	protected ZonedDateTime dateDebut;
 	@NotNull
 	protected Duration duree;
-	@NotEmpty
+	@NotBlank
 	protected String description;
 	@Pattern(regexp = "^#(?:[0-9a-fA-F]{3}){1,2}$")
 	protected String couleur;
