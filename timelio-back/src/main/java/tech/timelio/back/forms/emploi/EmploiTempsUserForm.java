@@ -1,7 +1,6 @@
 package tech.timelio.back.forms.emploi;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class EmploiTempsUserForm {
