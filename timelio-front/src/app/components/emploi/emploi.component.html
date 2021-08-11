@@ -5,18 +5,24 @@
     </div>
 </div>
 <div *ngIf="emploi" class="container-fluid" style="min-width: 1260px;">
-    <div class="row justify-content-center align-items-center">
+    <div class="row justify-content-center align-items-center m-2">
         <div class="col-auto">
-            <button (click)="previous()" class="btn"><span class="fa fa-arrow-left"></span></button>
+            <select class="form-select" (change)="onCalendarTypeChange($event)">
+                <option value="0" selected>Mois</option>
+                <option value="1">Semaine</option>
+            </select>
         </div>
         <div class="col-auto">
-            <mat-label>{{currentSelection}}</mat-label>
+            <button (click)="calendar.previous()" class="btn"><span class="fa fa-arrow-left"></span></button>
+        </div>
+        <div class="col-auto">
+            <mat-label>{{calendar.currentSelection}}</mat-label>
             <input hidden matInput [matDatepicker]="picker" (dateChange)="changeDate($event)">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </div>
         <div class="col-auto">
-            <button (click)="next()" class="btn"><span class="fa fa-arrow-right"></span></button>
+            <button (click)="calendar.next()" class="btn"><span class="fa fa-arrow-right"></span></button>
         </div>
         <div class="col-auto">
             <span class="d-inline-block text-truncate text-dark" style="max-width: 160px;">{{emploi.nom}}</span>
@@ -47,14 +53,14 @@
             </ul>
         </div>
     </div>
-    <div class="container">
+    <div *ngIf="isMonthCalendar()" class="container">
         <div class="row">
             <div *ngFor="let day of days" class="col border">{{day}}</div>
         </div>
-        <div *ngFor="let week of calendarPage" class="row">
+        <div *ngFor="let week of calendar.calendarPage" class="row">
             <div *ngFor="let dayCell of week" class="col border text-break">
-                <h6 [ngClass]="dayCell.date.month() != currentMonth ? 'text-muted' : ''">
-                    {{dayCell.date.format('D MMMM')}}
+                <h6 [ngClass]="dayCell.classLabel">
+                    {{dayCell.label}}
                 </h6>
                 <ul class="list-unstyled">
                     <li *ngIf="dayCell.evenements.length > 3">
@@ -67,9 +73,9 @@
                     </li>
                     <div *ngIf="dayCell.evenements.length <= 3">
                         <li *ngFor="let event of dayCell.evenements" class="mb-1">
-                            <button class="btn badge" [ngStyle]="{'background-color': event.couleur}"
-                                type="button" data-bs-toggle="modal" data-bs-target="#eventDetailsModal"
-                                (click)="showEventDetails(event.id)">
+                            <button class="btn badge" [ngStyle]="{'background-color': event.couleur}" type="button"
+                                data-bs-toggle="modal" data-bs-target="#eventDetailsModal"
+                                (click)="calendar.showEventDetails(event.id)">
                                 <span class="d-inline-block text-truncate" style="max-width: 120px;">
                                     {{event.description}}
                                 </span>
@@ -81,7 +87,43 @@
         </div>
     </div>
 
-    <app-details-event-modal [evenement]="selectedEvent" (emitter)="changeOnEvent($event)" [prefix]="getPrefix()">
+    <div *ngIf="isWeekCalendar()" class="container">
+        <div class="row">
+            <div class="col border">Heures</div>
+            <div *ngFor="let day of days" class="col border">{{day}}</div>
+        </div>
+        <div *ngFor="let hourCells of calendar.calendarPage;let index = index" class="row">
+            <div class="col border">
+                {{index*2 + ':00'}} <br/> {{((index+1)%12)*2 + ':00'}}
+            </div>
+            <div *ngFor="let dayCell of hourCells" class="col border text-break">
+                <ul class="list-unstyled">
+                    <li *ngIf="dayCell.evenements.length > 2">
+                        <button class="btn badge bg-danger rounded-pill" type="button" data-bs-toggle="modal"
+                            data-bs-target="#listEventsModal" (click)="selectedCell = dayCell">
+                            <span class="d-inline-block text-truncate" style="max-width: 120px;">
+                                {{dayCell.evenements.length}} evenements
+                            </span>
+                        </button>
+                    </li>
+                    <div *ngIf="dayCell.evenements.length <= 2">
+                        <li *ngFor="let event of dayCell.evenements" class="mb-1">
+                            <button class="btn badge" [ngStyle]="{'background-color': event.couleur}" type="button"
+                                data-bs-toggle="modal" data-bs-target="#eventDetailsModal"
+                                (click)="calendar.showEventDetails(event.id)">
+                                <span class="d-inline-block text-truncate" style="max-width: 120px;">
+                                    {{event.description}}
+                                </span>
+                            </button>
+                        </li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <app-details-event-modal [evenement]="calendar.selectedEvent" (emitter)="changeOnEvent($event)"
+        [prefix]="getPrefix()">
     </app-details-event-modal>
 
     <app-create-event-modal (emitter)="changeOnEvent($event)" [prefix]="getPrefix()">
@@ -110,7 +152,8 @@
                         <button *ngFor="let event of selectedCell.evenements"
                             class="list-group-item list-group-item-action mt-2" type="button"
                             data-bs-target="#eventDetailsModal" data-bs-toggle="modal" data-bs-dismiss="modal"
-                            (click)="showEventDetails(event.id)" [ngStyle]="{'background-color': event.couleur}">
+                            (click)="calendar.showEventDetails(event.id)"
+                            [ngStyle]="{'background-color': event.couleur}">
                             {{event.description}}
                         </button>
                     </div>
