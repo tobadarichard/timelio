@@ -101,4 +101,8 @@ export class MonthCalendar extends Calendar {
         this.monthPosition = dayjs(date).startOf('month');
         this.updateCalendar();
     }
+
+    getRepere(): Date{
+        return this.monthPosition.toDate();
+    }
 }

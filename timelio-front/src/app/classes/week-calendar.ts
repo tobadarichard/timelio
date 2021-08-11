@@ -95,4 +95,8 @@ export class WeekCalendar extends Calendar {
         this.startingDay = dayjs(date).startOf('week');
         this.updateCalendar();
     }
+
+    getRepere(): Date{
+        return this.startingDay.toDate();
+    }
 }

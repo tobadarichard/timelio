@@ -15,6 +15,8 @@ import { Calendar } from 'src/app/classes/calendar';
 import { CalendarType } from 'src/app/classes/calendar-type';
 import { MonthCalendar } from 'src/app/classes/month-calendar';
 import { WeekCalendar } from 'src/app/classes/week-calendar';
+import { ParsedEvenement } from 'src/app/model/evenements/parsed-evenement';
+import { EvenementService } from 'src/app/services/evenement/evenement.service';
 
 
 dayjs.extend(duration);
@@ -32,11 +34,18 @@ export class EmploiComponent implements OnInit {
   selectedCell: CalendarCell | null = null;
 
   days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
-  hours = [0,1,2,3,4,5,6,7,8,9,10,11];
+  hours = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
   calendar: Calendar = new MonthCalendar();
 
+  searchResult: ParsedEvenement[] | null = null;
+  searchForm = {
+    dateDebut: '',
+    dateFin: '',
+    description: ''
+  };
+
   constructor(private route: ActivatedRoute, private emploiService: EmploiService,
-    private snackbar: MatSnackBar) { }
+    private snackbar: MatSnackBar, private eventService: EvenementService) { }
 
   ngOnInit(): void {
     var code = this.route.snapshot.paramMap.get('code') || '';
@@ -83,10 +92,18 @@ export class EmploiComponent implements OnInit {
     this.calendar.putCalendarEvents();
   }
 
+  next(){
+    this.calendar.next();
+  }
+
+  previous(){
+    this.calendar.previous();
+  }
+
   onCalendarTypeChange(event: Event) {
     let element = event.target as HTMLInputElement;
-    let value = element.value  || '0';
-    if (value == '0' && this.calendar.type != CalendarType.MONTH){
+    let value = element.value || '0';
+    if (value == '0' && this.calendar.type != CalendarType.MONTH) {
       let newCalendanr = new MonthCalendar();
       newCalendanr.monthPosition = this.calendar.startingDay.startOf('month');
       newCalendanr.evenements = this.calendar.evenements;
@@ -94,7 +111,7 @@ export class EmploiComponent implements OnInit {
       newCalendanr.updateCalendar();
       this.calendar = newCalendanr;
     }
-    else if (value == '1' && this.calendar.type != CalendarType.WEEK){
+    else if (value == '1' && this.calendar.type != CalendarType.WEEK) {
       let newCalendanr = new WeekCalendar();
       newCalendanr.evenements = this.calendar.evenements;
       newCalendanr.startingDay = this.calendar.startingDay.startOf('week');
@@ -110,5 +127,36 @@ export class EmploiComponent implements OnInit {
 
   isWeekCalendar(): boolean {
     return this.calendar.type == CalendarType.WEEK;
+  }
+
+  searchEvenements(): void {
+    let dateDebut = dayjs(this.searchForm.dateDebut);
+    let dateFin = dayjs(this.searchForm.dateFin).set('hour', 23).set('minute', 59);
+    if (dateDebut.isAfter(dateFin)) {
+      this.snackbar.open('Dates incorrectes');
+      return;
+    }
+    this.eventService.searchEvents(this.getPrefix(), dateDebut, dateFin, this.searchForm.description)
+      .subscribe(
+        (events) => {
+          this.searchResult = events.map((e) => toParsed(e)); 
+          let listId = this.calendar.evenements.map((e) => e.id);
+          this.searchResult.forEach((e) => {
+            if (!listId.includes(e.id)){
+              this.calendar.evenements.push(e);
+            }
+          });
+        },
+        () => { this.snackbar.open('Une erreur est survenue'); }
+      );
+  }
+
+  cleanSearch(): void{
+    this.searchForm = {
+      dateDebut: '',
+      dateFin: '',
+      description: ''
+    };
+    this.searchResult = null;
   }
 }

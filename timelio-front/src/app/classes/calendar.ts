@@ -33,6 +33,8 @@ export abstract class Calendar {
 
     abstract changeDate(date: Date): void;
 
+    abstract getRepere(): Date;
+
     addEventPeriodique(event: ParsedEvenement): void {
         let dateDebut = dayjs(event.dateDebut.format('YYYY-MM-DD'));
         let dateFin: dayjs.Dayjs;
@@ -45,7 +47,7 @@ export abstract class Calendar {
         }
         dateFin = dateDebut.add(event.duree.asSeconds(), 'seconds');
 
-        while (dateDebut.isBefore(this.endingDay) && dateFin.isAfter(this.startingDay)) {
+        while (dateDebut.isBefore(this.endingDay)) {
             this.addEvent({
                 id: event.id,
                 dateDebut: dateDebut,

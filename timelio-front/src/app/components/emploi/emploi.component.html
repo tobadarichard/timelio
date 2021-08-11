@@ -13,16 +13,16 @@
             </select>
         </div>
         <div class="col-auto">
-            <button (click)="calendar.previous()" class="btn"><span class="fa fa-arrow-left"></span></button>
+            <button (click)="this.previous()" class="btn"><span class="fa fa-arrow-left"></span></button>
         </div>
         <div class="col-auto">
             <mat-label>{{calendar.currentSelection}}</mat-label>
-            <input hidden matInput [matDatepicker]="picker" (dateChange)="changeDate($event)">
+            <input hidden matInput [matDatepicker]="picker" (dateChange)="changeDate($event)" [value]="calendar.getRepere()">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </div>
         <div class="col-auto">
-            <button (click)="calendar.next()" class="btn"><span class="fa fa-arrow-right"></span></button>
+            <button (click)="this.next()" class="btn"><span class="fa fa-arrow-right"></span></button>
         </div>
         <div class="col-auto">
             <span class="d-inline-block text-truncate text-dark" style="max-width: 160px;">{{emploi.nom}}</span>
@@ -35,7 +35,8 @@
                     </button>
                 </li>
                 <li>
-                    <button class="nav-link">
+                    <button class="nav-link" data-bs-toggle="modal" data-bs-target="#searchEventsModal" 
+                    (click)="cleanSearch()">
                         Chercher un evenement
                     </button>
                 </li>
@@ -94,7 +95,7 @@
         </div>
         <div *ngFor="let hourCells of calendar.calendarPage;let index = index" class="row">
             <div class="col border">
-                {{index*2 + ':00'}} <br/> {{((index+1)%12)*2 + ':00'}}
+                {{index*2 + ':00'}} <br /> {{((index+1)%12)*2 + ':00'}}
             </div>
             <div *ngFor="let dayCell of hourCells" class="col border text-break">
                 <ul class="list-unstyled">
@@ -150,14 +151,72 @@
                 <div *ngIf="selectedCell && selectedCell.evenements.length > 0" class="modal-body">
                     <div class="list-group">
                         <button *ngFor="let event of selectedCell.evenements"
-                            class="list-group-item list-group-item-action mt-2" type="button"
-                            data-bs-target="#eventDetailsModal" data-bs-toggle="modal" data-bs-dismiss="modal"
-                            (click)="calendar.showEventDetails(event.id)"
+                            class="list-group-item list-group-item-action mt-2 d-inline-block text-truncate"
+                            type="button" data-bs-target="#eventDetailsModal" data-bs-toggle="modal"
+                            data-bs-dismiss="modal" (click)="calendar.showEventDetails(event.id)"
                             [ngStyle]="{'background-color': event.couleur}">
                             {{event.description}}
                         </button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="searchEventsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        Rechercher un evenement
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form #form="ngForm" (ngSubmit)="searchEvenements()">
+                    <div class="modal-body">
+                        <div class="mb-3 row">
+                            <label class="col-auto col-form-label">Description : </label>
+                            <div class="col-auto">
+                                <input class='form-control' type="text" name="description"
+                                    [(ngModel)]="searchForm.description">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-auto col-form-label">De :</label>
+                            <div class="col-auto">
+                                <input class="form-control" type="date" name="dateDebut" required
+                                    [(ngModel)]="searchForm.dateDebut">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-auto col-form-label">A :
+                            </label>
+                            <div class="col-auto">
+                                <input class="form-control" type="date" name="dateFin" required
+                                    [(ngModel)]="searchForm.dateFin">
+                            </div>
+                        </div>
+                        <div *ngIf="searchResult" class="list-group">
+                            <button *ngFor="let event of searchResult"
+                                class="list-group-item list-group-item-action mt-2 d-inline-block text-truncate"
+                                type="button" data-bs-target="#eventDetailsModal" data-bs-toggle="modal"
+                                data-bs-dismiss="modal" (click)="calendar.showEventDetails(event.id)"
+                                [ngStyle]="{'background-color': event.couleur}">
+                                {{event.description}}
+                            </button>
+                            <div *ngIf="searchResult.length == 0">
+                                Pas de résultats
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary col-auto" type="submit" [disabled]="form.invalid">
+                            Chercher
+                        </button>
+                        <button class="btn btn-secondary col-auto" type="button"
+                            data-bs-dismiss="modal">Annuler</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
