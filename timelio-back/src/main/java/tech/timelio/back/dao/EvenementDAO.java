@@ -23,8 +23,10 @@ public interface EvenementDAO
 	Page<Evenement> findAllByEmploiTempsId(Long idEmploi,Pageable pagination);
 	
 	@Query("SELECT event FROM Evenement event WHERE event.emploiTemps.id = ?1 "
-			+ "AND event.dateDebut > ?2 "
-			+ "AND event.dateDebut < ?3 "
+			+ "AND "
+			+ "((event.dateDebut > ?2 "
+			+ "AND event.dateDebut < ?3) "
+			+ "OR event.periodique = TRUE) "
 			+ "AND event.description like %?4%"
 			+ "ORDER BY event.dateDebut ASC")
 	List<Evenement> searchEvents(Long idEmploi, ZonedDateTime start, ZonedDateTime end,

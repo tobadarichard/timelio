@@ -3,6 +3,7 @@ package tech.timelio.back.business.interfaces;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import biweekly.ICalendar;
 import tech.timelio.back.business.interfaces.exceptions.NotFoundException;
 import tech.timelio.back.modele.EmploiTemps;
 import tech.timelio.back.modele.Utilisateur;
@@ -91,5 +92,21 @@ public interface EmploiTempsService {
 	 * @return La partie voulue des emplois du temps
 	 */
 	public Page<EmploiTemps> listeEmploi(Utilisateur owner, Pageable pagination);
+	
+	/**
+	 * Exporte un emploi du temps sous forme d'un object ICalendar
+	 * @param idEmploi L'id de l'emploi du temps
+	 * @return Un objet ICalendar représentant le calendrier
+	 * @throws NotFoundException Si l'emploi du temps n'est pas trouvé
+	 */
+	public ICalendar exporterEmploi(Long idEmploi) throws NotFoundException;
+	
+	/**
+	 * Exporte un emploi du temps sous forme d'un object ICalendar
+	 * @param codeAcces Le code de l'emploi du temps
+	 * @return Un objet ICalendar représentant le calendrier
+	 * @throws NotFoundException Si l'emploi du temps n'est pas trouvé
+	 */
+	public ICalendar exporterEmploi(String codeAcces) throws NotFoundException;
 
 }

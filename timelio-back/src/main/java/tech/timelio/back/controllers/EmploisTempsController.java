@@ -5,7 +5,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import biweekly.ICalendar;
 import tech.timelio.back.auth.AuthService;
 import tech.timelio.back.auth.ForbiddenActionException;
 import tech.timelio.back.business.interfaces.EmploiTempsService;
@@ -24,18 +26,27 @@ import tech.timelio.back.forms.emploi.EmploiTempsUserForm;
 import tech.timelio.back.modele.EmploiTemps;
 
 @RestController
-@CrossOrigin(origins = "${timelio.url-front}")
 public class EmploisTempsController {
 	@Autowired
 	protected EmploiTempsService serviceEmploi;
 	@Autowired
 	protected AuthService authService;
 	
+	private ResponseEntity<String> ecrireDansReponse(ICalendar ical){
+		String name = ical.getNames().get(0).getValue();
+		
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION,
+				"attachment; filename=\"" + name + ".ics\"")
+				.header(HttpHeaders.CONTENT_TYPE, "text/calendar")
+				.body(ical.write());
+	}
+
 	@PostMapping("/emplois")
 	public EmploiTemps creerEmploiPublique(@Valid @RequestBody EmploiTempsForm form){
 		return serviceEmploi.creerEmploi(form.getNom());
 	}
-	
+
 	@PostMapping("/user/emplois")
 	public EmploiTemps creerEmploiUtilisateur(
 			@Valid @RequestBody EmploiTempsUserForm form,
@@ -43,13 +54,13 @@ public class EmploisTempsController {
 		return serviceEmploi.creerEmploi(form.getNom(),
 				form.getPublique(),userId.getUtilisateur());
 	}
-	
+
 	@DeleteMapping("/emplois/{codeAcces}")
 	public void supprimerEmploiPublique(@PathVariable String codeAcces) 
 			throws NotFoundException{
 		serviceEmploi.supprimerEmploi(codeAcces);
 	}
-	
+
 	@DeleteMapping("/user/emplois/{id}")
 	public void supprimerEmploiUtilisateur(@PathVariable Long id,
 			@RequestAttribute UtilisateurId userId) 
@@ -63,7 +74,7 @@ public class EmploisTempsController {
 			throws NotFoundException {
 		return serviceEmploi.recupererEmploi(codeAcces);
 	}
-	
+
 	@GetMapping("/user/emplois/{id}")
 	public EmploiTemps recupererEmploiUtilisateur(@PathVariable Long id,
 			@RequestAttribute UtilisateurId userId) 
@@ -71,13 +82,13 @@ public class EmploisTempsController {
 		authService.isEmploiOwner(id, userId.getUtilisateur());
 		return serviceEmploi.recupererEmploi(id);
 	}
-	
+
 	@PutMapping("/emplois/{codeAcces}")
 	public EmploiTemps majEmploiPublique(@PathVariable String codeAcces,
 			@Valid @RequestBody EmploiTempsForm form) throws NotFoundException {
 		return serviceEmploi.majEmploi(codeAcces,form.getNom());
 	}
-	
+
 	@PutMapping("/user/emplois/{id}")
 	public EmploiTemps majEmploiUtilisateur(@PathVariable Long id,
 			@RequestAttribute UtilisateurId userId,
@@ -86,10 +97,24 @@ public class EmploisTempsController {
 		authService.isEmploiOwner(id, userId.getUtilisateur());
 		return serviceEmploi.majEmploi(id,form.getNom(),form.getPublique());
 	}
-	
+
 	@GetMapping("/user/emplois")
 	public Page<EmploiTemps> listerEmploiUtilisateur(
 			@RequestAttribute UtilisateurId userId,Pageable pagination) {
 		return serviceEmploi.listeEmploi(userId.getUtilisateur(), pagination);
+	}
+
+	@GetMapping("/emplois/{codeAcces}/download")
+	public ResponseEntity<String> telechargerEmploiPublique(
+			@PathVariable String codeAcces) throws NotFoundException {
+		return ecrireDansReponse(serviceEmploi.exporterEmploi(codeAcces));
+	}
+
+	@GetMapping("/user/emplois/{id}/dowbload")
+	public ResponseEntity<String> telechargerEmploiUtilisateur(
+			@PathVariable Long id,@RequestAttribute UtilisateurId userId) 
+					throws NotFoundException, ForbiddenActionException {
+		authService.isEmploiOwner(id, userId.getUtilisateur());
+		return ecrireDansReponse(serviceEmploi.exporterEmploi(id));
 	}
 }
