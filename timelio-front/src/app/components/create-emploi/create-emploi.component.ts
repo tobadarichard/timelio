@@ -18,7 +18,7 @@ export class CreateEmploiComponent implements OnInit {
   constructor(public authService: AuthService,private fb: FormBuilder, private emploiService: EmploiService,
     private router: Router, private snackbar: MatSnackBar) {
     this.emploiForm = fb.group({
-      'nom': ['', [Validators.required,Validators.pattern('\\w+')]],
+      'nom': ['', Validators.required],
       'publique': [false]
     });
   }
@@ -28,6 +28,10 @@ export class CreateEmploiComponent implements OnInit {
 
   createEmploi(): void{
     var values = this.emploiForm.value;
+    if (values.nom.trim() == ''){
+      this.snackbar.open('Le nom ne peut pas être vide');
+      return;
+    }
     this.emploiForm.reset();
     var result: Observable<EmploiTemps>;
     if (this.authService.isLoggedIn()){

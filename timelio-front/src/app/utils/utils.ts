@@ -86,7 +86,7 @@ function getEventForm(): EvenementForm{
         dateFin: '',
         heureFin: '',
         description: '',
-        couleur: '',
+        couleur: '#000000',
         periodique: false,
         periodeJour: 1
     }; 

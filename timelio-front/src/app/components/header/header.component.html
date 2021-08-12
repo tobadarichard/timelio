@@ -1,17 +1,25 @@
-<nav class="navbar navbar-light navbar-expand-sm bg-light text-end d-xl-flex navigation-clean">
-    <div class="container"><a class="navbar-brand" routerLink="/home">Timelio</a><button data-bs-toggle="collapse"
-            class="navbar-toggler" data-bs-target="#navcol-1"><i class="fa fa-bars"></i></button>
-        <span *ngIf="authService.isLoggedIn()" class="text-nowrap navbar-text">Bonjour {{ (authService.getUserInfos() |
-            async )?.pseudo}}</span>
+<nav class="navbar navbar-light navbar-expand-md bg-light text-end d-xl-flex navigation-clean">
+    <div class="container">
+        <a class="navbar-brand" routerLink="/home">Timelio</a>
+        <span *ngIf="authService.isLoggedIn()" class="text-nowrap navbar-text text-truncate"
+            style="max-width: 150px;">Bonjour {{ (authService.getUserInfos() | async )?.pseudo}}</span>
+        <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><i class="fa fa-bars"></i>
+        </button>
+
         <div class="collapse navbar-collapse justify-content-end container" id="navcol-1">
-            <a class="btn btn-primary mx-2" role="button" routerLink="/emplois/create">Créer un emploi du temps</a>
-            <a class="btn btn-primary mx-2" role="button" routerLink="/emplois">Voir un emploi du temps</a>
-            <a *ngIf="authService.isLoggedIn()" class="btn btn-primary mx-2" role="button" 
-            routerLink="/account/infos">Mon compte</a>
-            <button *ngIf="authService.isLoggedIn()" class="btn btn-primary" (click)="authService.logout()">
-                Se déconnecter</button>
-            <a *ngIf="!authService.isLoggedIn()" class="btn btn-primary" role="button" routerLink="/login">Se
-                connecter</a>
+            <div class="row">
+                <a class="btn btn-primary m-2 col-auto" role="button" routerLink="/emplois/create">Créer un emploi du
+                    temps</a>
+                <a class="btn btn-primary m-2 col-auto" role="button" routerLink="/emplois">Voir un emploi du temps</a>
+                <a *ngIf="authService.isLoggedIn()" class="btn btn-primary m-2 col-auto" role="button"
+                    routerLink="/account/infos">Mon compte</a>
+                <button *ngIf="authService.isLoggedIn()" class="btn btn-primary m-2 col-auto"
+                    (click)="authService.logout()">
+                    Se déconnecter</button>
+                <a *ngIf="!authService.isLoggedIn()" class="btn btn-primary m-2 col-auto" role="button"
+                    routerLink="/login">Se
+                    connecter</a>
+            </div>
         </div>
     </div>
 </nav>

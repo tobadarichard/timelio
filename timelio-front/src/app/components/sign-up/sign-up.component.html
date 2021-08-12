@@ -11,7 +11,7 @@
         </div>
         <div class="mb-3">
             <input class="form-control" type="email" name="email" placeholder="Email" formControlName="email"
-            [ngClass]="!mailAvailable && form.pristine ? 'is-invalid' : ''">
+                autocomplete="email" [ngClass]="!mailAvailable && form.pristine ? 'is-invalid' : ''">
             <div *ngIf="!mailAvailable && form.pristine" class="invalid-feedback">
                 Cette adresse mail est déjà utilisée
             </div>
@@ -23,15 +23,17 @@
             </div>
         </div>
         <div class="mb-3">
-            <input class="form-control" type="password" name="password" placeholder="Mot de passe" 
-            formControlName="password" [ngClass]="!passwordsMatch && form.pristine ? 'is-invalid' : ''">
+            <input class="form-control" type="password" name="password" placeholder="Mot de passe"
+                formControlName="password" [ngClass]="!passwordsMatch && form.pristine ? 'is-invalid' : ''"
+                autocomplete="new-password">
             <div *ngIf="!passwordsMatch && form.pristine" class="invalid-feedback">
                 Les mots de passe ne correspondent pas
             </div>
         </div>
         <div class="mb-3">
-            <input class="form-control" type="password" name="confPassword" placeholder="Confirmer le mot de passe" 
-            formControlName="confPassword" [ngClass]="!passwordsMatch && form.pristine ? 'is-invalid' : ''">
+            <input class="form-control" type="password" name="confPassword" placeholder="Confirmer le mot de passe"
+                formControlName="confPassword" [ngClass]="!passwordsMatch && form.pristine ? 'is-invalid' : ''"
+                autocomplete="new-password">
             <div *ngIf="!passwordsMatch && form.pristine" class="invalid-feedback">
                 Les mots de passe ne correspondent pas
             </div>

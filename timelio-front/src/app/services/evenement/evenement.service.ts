@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import * as dayjs from 'dayjs';
 import { Observable } from 'rxjs';
 import { Evenement } from 'src/app/model/evenements/evenement';
 import { ParsedEvenement } from 'src/app/model/evenements/parsed-evenement';
@@ -38,6 +39,17 @@ export class EvenementService {
         couleur: event.couleur,
         periodique: event.periodique,
         periode: event.periode.toISOString()
+      });
+  }
+
+  searchEvents(prefix: string, dateDebut: dayjs.Dayjs, dateFin: dayjs.Dayjs,
+    description: string): Observable<Evenement[]> {
+
+    return this.httpClient.post<Evenement[]>(environment.url + prefix + '/events/search',
+      {
+        dateDebut: dateDebut.toISOString(),
+        dateFin: dateFin.toISOString(),
+        description: description
       });
   }
 }

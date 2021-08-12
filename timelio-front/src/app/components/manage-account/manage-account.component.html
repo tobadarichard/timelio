@@ -4,12 +4,11 @@
     <form [formGroup]="pseudoForm" #refPseudoForm="ngForm" (ngSubmit)="changePseudo()">
         <div class="row mb-3">
             <h3 class="text-center">Changer de pseudo</h3>
-            <div class="col">
+            <div class="col-auto">
                 <input class="form-control" type="text" name="pseudo" placeholder="pseudo" formControlName="pseudo">
             </div>
-            <div class="col">
-                <button class="btn btn-primary col" type="submit"
-                    [disabled]="refPseudoForm.invalid">Changer le
+            <div class="col-auto m-2 m-sm-0">
+                <button class="btn btn-primary col-auto" type="submit" [disabled]="refPseudoForm.invalid">Changer le
                     pseudo</button>
             </div>
         </div>
@@ -19,19 +18,20 @@
             <h3 class="text-center">Changer de mot de passe</h3>
             <div class="col-10">
                 <input class="form-control" type="password" name="password" placeholder="Mot de passe actuel"
-                    formControlName="password">
+                    formControlName="password" autocomplete="current-password">
             </div>
             <div class="col-10">
                 <input class="form-control" type="password" name="newPassword" placeholder="Nouveau mot de passe"
-                    formControlName="newPassword">
+                    formControlName="newPassword" autocomplete="new-password">
             </div>
             <div class="col-10">
                 <input class="form-control" type="password" name="confNewPassword"
-                    placeholder="Confirmer le nouveau mot de passe" formControlName="confNewPassword">
+                    placeholder="Confirmer le nouveau mot de passe" formControlName="confNewPassword"
+                    autocomplete="new-password">
             </div>
             <div class="col">
-                <button class="btn btn-primary col" type="submit"
-                    [disabled]="refPasswordForm.invalid">Changer le mot de passe</button>
+                <button class="btn btn-primary col" type="submit" [disabled]="refPasswordForm.invalid">Changer le mot de
+                    passe</button>
             </div>
         </div>
     </form>
@@ -43,8 +43,8 @@
             <button name="delete" class="btn btn-danger" type="button" data-bs-toggle="modal"
                 data-bs-target="#confirmationModal">Supprimer mon compte</button>
         </div>
-        <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" 
-        aria-hidden="true">
+        <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
