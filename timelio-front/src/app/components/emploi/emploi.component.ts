@@ -17,7 +17,7 @@ import { MonthCalendar } from 'src/app/classes/month-calendar';
 import { WeekCalendar } from 'src/app/classes/week-calendar';
 import { ParsedEvenement } from 'src/app/model/evenements/parsed-evenement';
 import { EvenementService } from 'src/app/services/evenement/evenement.service';
-
+import { saveAs } from 'file-saver';
 
 dayjs.extend(duration);
 dayjs.locale('fr');
@@ -66,6 +66,25 @@ export class EmploiComponent implements OnInit {
     }
   }
 
+  downloadEmploi(): void {
+    if (!this.emploi) {
+      return;
+    }
+    let nom = this.emploi.nom + '.ics';
+    (this.isUserEmploi ?
+      this.emploiService.downloadEmploi(this.emploi.id)
+      : this.emploiService.downloadUserEmploi(this.emploi.codeAcces)).subscribe(
+        (response) => {
+          if (response.body) {
+            saveAs(response.body, nom);
+          }
+          else {
+            this.snackbar.open('Une erreur est survenue');
+          }
+        }, () => { this.snackbar.open('Une erreur est survenue'); }
+      )
+  }
+
   getPrefix(): string {
     if (!this.emploi) {
       return '';
@@ -92,11 +111,11 @@ export class EmploiComponent implements OnInit {
     this.calendar.putCalendarEvents();
   }
 
-  next(){
+  next() {
     this.calendar.next();
   }
 
-  previous(){
+  previous() {
     this.calendar.previous();
   }
 
@@ -139,10 +158,10 @@ export class EmploiComponent implements OnInit {
     this.eventService.searchEvents(this.getPrefix(), dateDebut, dateFin, this.searchForm.description)
       .subscribe(
         (events) => {
-          this.searchResult = events.map((e) => toParsed(e)); 
+          this.searchResult = events.map((e) => toParsed(e));
           let listId = this.calendar.evenements.map((e) => e.id);
           this.searchResult.forEach((e) => {
-            if (!listId.includes(e.id)){
+            if (!listId.includes(e.id)) {
               this.calendar.evenements.push(e);
             }
           });
@@ -151,7 +170,7 @@ export class EmploiComponent implements OnInit {
       );
   }
 
-  cleanSearch(): void{
+  cleanSearch(): void {
     this.searchForm = {
       dateDebut: '',
       dateFin: '',

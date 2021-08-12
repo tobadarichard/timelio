@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { EmploiTemps } from 'src/app/model/emploi-temps';
@@ -42,7 +42,7 @@ export class EmploiService {
   }
 
   deleteUserEmploi(id: number): Observable<string> {
-    return this.httpClient.delete(environment.url + '/user/emplois/' + id,{ responseType: 'text' });
+    return this.httpClient.delete(environment.url + '/user/emplois/' + id, { responseType: 'text' });
   }
 
   updateEmploi(code: String, nom: string): Observable<EmploiTemps> {
@@ -53,4 +53,16 @@ export class EmploiService {
     return this.httpClient.put<EmploiTemps>(environment.url + '/user/emplois/' + id,
       { nom: nom, publique: publique });
   }
+
+  downloadUserEmploi(code: String): Observable<HttpResponse<Blob>> {
+    return this.httpClient.get(environment.url + '/emplois/' + code + '/download',
+    { responseType: 'blob',observe: 'response' });
+  }
+
+  downloadEmploi(id: number): Observable<HttpResponse<Blob>> {
+    return this.httpClient.get(environment.url + '/user/emplois/' + id + 'download',
+      { responseType: 'blob',observe: 'response' });
+  }
+
+
 }
