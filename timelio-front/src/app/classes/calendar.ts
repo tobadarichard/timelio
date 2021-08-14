@@ -36,7 +36,7 @@ export abstract class Calendar {
     abstract getRepere(): Date;
 
     addEventPeriodique(event: ParsedEvenement): void {
-        let dateDebut = dayjs(event.dateDebut.format('YYYY-MM-DD'));
+        let dateDebut = event.dateDebut;
         let dateFin: dayjs.Dayjs;
         let periode = event.periode.asSeconds();
 
