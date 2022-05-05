@@ -1,6 +1,5 @@
 # Timelio :calendar:
 
-## https://www.timelio.tech
 
 Timelio est une application pour la création d'emploi (calendrier) avec des evenements.
 
