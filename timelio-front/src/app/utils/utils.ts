@@ -36,7 +36,15 @@ function fromFormToParsed(form: EvenementForm): ParsedEvenement {
     if (dateDebut.isAfter(dateFin) || dateDebut.isSame(dateFin)) {
         throw new Error('La date de fin doit être après la date de début');
     }
-    let duree = dayjs.duration(dateFin.diff(dateDebut));
+    
+    let dureeDay = dateFin.diff(dateDebut, "days");
+    let newDateFin = dateFin.subtract(dureeDay, "days");
+    let dureeHours = newDateFin.diff(dateDebut, "hours");
+    newDateFin = newDateFin.subtract(dureeHours, "hours");
+    let dureeMinutes = newDateFin.diff(dateDebut, "minutes");
+    let duree = dayjs.duration({days: dureeDay, 
+                                hours: dureeHours,
+                                minutes: dureeMinutes});
 
     let periode = dayjs.duration(0);
     if (form.periodique) {
